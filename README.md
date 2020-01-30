@@ -1,5 +1,5 @@
 # Autoship
-### "Always hits the mark"
+## "Always hits the mark"
 
 ### Contributers
 - Terry Nguyen
