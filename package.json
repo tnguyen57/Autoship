@@ -1,0 +1,29 @@
+{
+  "name": "autoship-site",
+  "version": "0.1.0",
+  "description": "An interface for playing Battleship against AI opponents.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tnguyen57/Autoship.git"
+  },
+  "keywords": [
+    "web",
+    "game",
+    "ai",
+    "battleship"
+  ],
+  "author": "Good Questions",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tnguyen57/Autoship/issues"
+  },
+  "homepage": "https://github.com/tnguyen57/Autoship#readme",
+  "dependencies": {
+    "@koa/router": "^8.0.8",
+    "koa": "^2.11.0"
+  }
+}
