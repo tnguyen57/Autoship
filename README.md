@@ -16,3 +16,4 @@ Autoship is a project that allows any user to play against an AI for a customiza
 $ npm install
 $ node index.js
 ```
+Server is launched on http://localhost:3000/.
