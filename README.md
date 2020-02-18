@@ -11,9 +11,13 @@
 ### Project Description
 Autoship is a project that allows any user to play against an AI for a customizable Battleship game.
 
-### Build and Run
+### Install
 ```
 $ npm install
+```
+
+### Build and Run
+```
 $ node index.js
 ```
 Server is launched on http://localhost:3000/.
