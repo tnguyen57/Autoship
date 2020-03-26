@@ -1,4 +1,5 @@
 import React from 'react';
+import './Square.css';
 
 /**
  * A single square on a board. A square displays the hit/miss state
@@ -38,18 +39,28 @@ export default class Square extends React.Component {
       hit
     } = this.props;
     const colors = {
-      none: 'white',
       hit: 'red',
       miss: 'black'
     };
     return (
-      <circle
-        cx={(x + 0.5) * boxSize}
-        cy={(y + 0.5) * boxSize}
-        r={boxSize / 2 * 0.8}
-        fill={colors[hit]}
-        onClick={this.handleClick}
-      />
+      <g onClick={this.handleClick}>
+        <rect
+          x={x * boxSize}
+          y={y * boxSize}
+          width={boxSize}
+          height={boxSize}
+          stroke="black"
+          fill="transparent"
+        />
+        {hit !== 'none' && (
+          <circle
+            cx={(x + 0.5) * boxSize}
+            cy={(y + 0.5) * boxSize}
+            r={boxSize / 2 * 0.8}
+            className={`square--${hit}`}
+          />
+        )}
+      </g>
     );
   }
 }

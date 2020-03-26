@@ -12,13 +12,7 @@ export default class GameState extends React.Component {
 
   constructor(props) {
     super(props);
-    const st = {};
-    for(let x = 0; x < props.size; x++) {
-      for(let y = 0; y < props.size; y++) {
-        st[`${x},${y}`] = 'none';
-      }
-    }
-    this.state = st;
+    this.state = {};
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -31,21 +25,23 @@ export default class GameState extends React.Component {
   render() {
     const size = this.props.size;
     const moves = [];
-    for(const key in this.state) {
-      const coords = key.split(',');
-      moves.push(
-        <Square
-          key={key}
-          x={+coords[0]}
-          y={+coords[1]}
-          boxSize={50}
-          hit={this.state[key]}
-          onClick={this.handleClick}
-        />
-      );
+    for(let x = 0; x < size; x++) {
+      for(let y = 0; y < size; y++) {
+        const key = `${x},${y}`;
+        moves.push(
+          <Square
+            key={key}
+            x={x}
+            y={y}
+            boxSize={50}
+            hit={this.state[key] || 'none'}
+            onClick={this.handleClick}
+          />
+        );
+      }
     }
     return (
-      <GameDisplay size={size} squarePixels={50}>
+      <GameDisplay width={size * 50}>
         {moves}
       </GameDisplay>
     );
