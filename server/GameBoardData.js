@@ -45,14 +45,14 @@ let GameBoardData = class{
         return Guesses.MISS;
     }
 
-    get ShipCount(){
+    get shipCount(){
         /**
          * @return {Int} - Returns the number of ships left
          */
         return this._remainingShips.length;
     }
 
-    get LastSunkShipID(){
+    get lastShipID(){
         /**
          * @return {Int} - Returns the id of the last sunk ship. Return null if no ship sunk.
          */
