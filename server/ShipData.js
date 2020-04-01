@@ -56,4 +56,4 @@ let ShipData = class {
     }
 }
 
-module.exports = ShipData
+module.exports = ShipData;
