@@ -3,10 +3,16 @@
  * It will keep track of damages, it's position, and will allow for
  * guesses on it.
  */
+
 const Guesses = require("./utilities");
 
-
 let ShipData = class {
+    /**
+     * Create a ship using an array of coordinates.
+     * 
+     * @param {Array[{{x:Int, y:Int}}]} coordinateArray 
+     * @param {Int} id 
+     */
     constructor(coordinateArray, id = 0){
         this._activePositions = coordinateArray;
         this._hitPositions = [];
@@ -35,7 +41,6 @@ let ShipData = class {
         }
         return Guesses.MISS;
     }
-
 
     /**
     * Check to see if the ship is sunk

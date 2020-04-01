@@ -8,7 +8,6 @@ const ShipData = require("./ShipData");
 const Guesses = require("./utilities");
 
 let BoardData = class {
-
     /**
     * Construct the board given an array of ships.
     * 
@@ -63,7 +62,6 @@ let BoardData = class {
     get shipCount() {  
         return this._remainingShips.length;
     }
-
 
     /**
     * Returns the ID of the last sunk simp
