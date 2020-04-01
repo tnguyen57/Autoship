@@ -4,8 +4,8 @@
  * This class will store current guesses and ship positions
  */
 
-require("GameShipData");
-require("./utilities");
+const ShipData = require("ShipData");
+const Utilities = require("./utilities");
 
 let BoardData = class{
 
@@ -13,9 +13,9 @@ let BoardData = class{
         /**
          * @param {Array[ShipData]} - Contains all of the ships to the board.
          */
-        this._guesses = new Array();
+        this._guesses = [];
         this._remainingShips = shipArray;
-        this._sunkShip = new Array();
+        this._sunkShip = [];
     }
 
     /**
@@ -31,17 +31,17 @@ let BoardData = class{
         for (let i = 0; i < this._remainingShips.length; i++){
             ship = this._remainingShips[i];
             classification = ship.guess(x, y)
-            if (classification == Guesses.HIT){
-                return Guesses.HIT;
+            if (classification === Utilities.Guesses.HIT){
+                return Utilities.Guesses.HIT;
 
             }
-            else if (classification == Guesses.SINK){
+            else if (classification === Utilities.Guesses.SINK){
                 this._remainingShips.splice(i, 1);
                 this._sunkShip.push(ship);
-                return Guesses.SINK;
+                return Utilities.Guesses.SINK;
             }
         }
-        return Guesses.MISS;
+        return Utilities.Guesses.MISS;
     }
 
     /**
@@ -49,8 +49,7 @@ let BoardData = class{
     * 
     * @return {Int} - Corresponds to the number of ships on the board.
     */
-    get shipCount(){
-        
+    get shipCount(){  
         return this._remainingShips.length;
     }
 
@@ -61,7 +60,7 @@ let BoardData = class{
     * @return {Int} - Returns the id of the last sunk ship. Return null if no ship sunk.
     */
     get lastSunkID(){
-        if (this._sunkShip.length == 0){
+        if (this._sunkShip.length === 0){
             return null;
         }
         return this._sunkShip[this._sunkShip.length - 1].id;

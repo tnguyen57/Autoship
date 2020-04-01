@@ -3,12 +3,12 @@
  * It will keep track of damages, it's position, and will allow for
  * guesses on it.
  */
-require("./utilities");
+const utilities = require("./utilities");
 
 let ShipData = class{
     constructor(coordinateArray, id = 0){
         this._activePositions = coordinateArray;
-        this._hitPositions = new Array();
+        this._hitPositions = [];
         this._id = id;
     }
 
@@ -22,14 +22,14 @@ let ShipData = class{
     */
     guess(x, y){
         for (let i  = 0; i < this._activePositions.length; i++){
-            currentPosition = this._activePositions[i]
-            if (this._activePositions[i].x == x && this._activePositions[i].y == y){
+            const currentPosition = this._activePositions[i]
+            if (this._activePositions[i].x === x && this._activePositions[i].y === y){
                 this._hitPositions.push(currentPosition);
                 this._activePositions.splice(i, 1);
                 if (this.isSunk()){
-                    return Guesses.SINK;
+                    return utilities.Guesses.SINK;
                 }
-                return Guesses.HIT;
+                return utilities.Guesses.HIT;
             }
         }
         return Guesses.MISS;
@@ -42,7 +42,7 @@ let ShipData = class{
     * @return {Boolean} - Return true if the Ship has sunk. False, otherwise.
     */
     isSunk(){
-        return this._activePositions.length == 0;
+        return this._activePositions.length === 0;
     }
 
     get id(){
