@@ -4,17 +4,15 @@
  * This class will store current guesses and ship positions
  */
 
-const ShipData = require("./ShipData");
 const Guesses = require("./utilities");
 
-let BoardData = class {
+const BoardData = class {
     /**
     * Construct the board given an array of ships.
-    * 
+    *
     * @param {Array[ShipData]} - Contains all of the ships to the board.
     */
     constructor(shipArray) {
-        
         this._guesses = [];
         this._sunkShip = [];
         this._remainingShips = shipArray;
@@ -25,7 +23,7 @@ let BoardData = class {
                 this._remainingShips.splice(i, 1);
                 this._sunkShip.push(ship);
             }
-        }  
+        }
     }
 
     /**
@@ -39,13 +37,11 @@ let BoardData = class {
         this._guesses.push({x: x, y: y});
 
         for (let i = 0; i < this._remainingShips.length; i++) {
-            let ship = this._remainingShips[i];
-            const classification = ship.guess(x, y)
+            const ship = this._remainingShips[i];
+            const classification = ship.guess(x, y);
             if (classification === Guesses.HIT) {
                 return Guesses.HIT;
-
-            }
-            else if (classification === Guesses.SINK) {
+            } else if (classification === Guesses.SINK) {
                 this._remainingShips.splice(i, 1);
                 this._sunkShip.push(ship);
                 return Guesses.SINK;
@@ -56,24 +52,24 @@ let BoardData = class {
 
     /**
     * Return the number of ships remaining.
-    * 
+    *
     * @return {Int} - Corresponds to the number of ships on the board.
     */
-    get shipCount() {  
+    get shipCount() {
         return this._remainingShips.length;
     }
 
     /**
     * Returns the ID of the last sunk simp
-    * 
+    *
     * @return {Int} - Returns the id of the last sunk ship. Return null if no ship sunk.
     */
     get lastSunkID() {
-        if (this._sunkShip.length === 0){
+        if (this._sunkShip.length === 0) {
             return null;
         }
         return this._sunkShip[this._sunkShip.length - 1].id;
     }
-}
+};
 
 module.exports = BoardData;

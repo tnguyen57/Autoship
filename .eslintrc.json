@@ -18,6 +18,8 @@
       "indent": ["error", 4],
       "linebreak-style": ["off"],
       "quotes": ["error", "double"],
-      "max-len": ["warn"]
+      "max-len": ["warn"],
+      "valid-jsdoc": ["warn"],
+      "require-jsdoc": ["warn"]
     }
 }
