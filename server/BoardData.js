@@ -4,7 +4,7 @@
  * This class will store current guesses and ship positions
  */
 
-const ShipData = require("ShipData");
+const ShipData = require("./ShipData");
 const Utilities = require("./utilities");
 
 let BoardData = class{
