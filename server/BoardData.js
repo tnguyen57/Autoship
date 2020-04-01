@@ -7,24 +7,26 @@
 const ShipData = require("./ShipData");
 const Guesses = require("./utilities");
 
-let BoardData = class{
+let BoardData = class {
 
-    constructor(shipArray){
-        /**
-         * @param {Array[ShipData]} - Contains all of the ships to the board.
-         */
+    /**
+    * Construct the board given an array of ships.
+    * 
+    * @param {Array[ShipData]} - Contains all of the ships to the board.
+    */
+    constructor(shipArray) {
+        
         this._guesses = [];
         this._sunkShip = [];
         this._remainingShips = shipArray;
 
-        for (let i = 0; i < shipArray.length; i++){
+        for (let i = 0; i < shipArray.length; i++) {
             const ship = shipArray[i];
-            if (ship.isSunk()){
+            if (ship.isSunk()) {
                 this._remainingShips.splice(i, 1);
                 this._sunkShip.push(ship);
             }
-        }
-        
+        }  
     }
 
     /**
@@ -34,17 +36,17 @@ let BoardData = class{
      * @modify - Make the ship as sunken/hit if the guess succeed
      * @return {Guesses} - Returns whether the guess is a hit/miss/sink.
      */
-    guess(x, y){
+    guess(x, y) {
         this._guesses.push({x: x, y: y});
 
-        for (let i = 0; i < this._remainingShips.length; i++){
+        for (let i = 0; i < this._remainingShips.length; i++) {
             let ship = this._remainingShips[i];
-            let classification = ship.guess(x, y)
-            if (classification === Guesses.HIT){
+            const classification = ship.guess(x, y)
+            if (classification === Guesses.HIT) {
                 return Guesses.HIT;
 
             }
-            else if (classification === Guesses.SINK){
+            else if (classification === Guesses.SINK) {
                 this._remainingShips.splice(i, 1);
                 this._sunkShip.push(ship);
                 return Guesses.SINK;
@@ -58,7 +60,7 @@ let BoardData = class{
     * 
     * @return {Int} - Corresponds to the number of ships on the board.
     */
-    get shipCount(){  
+    get shipCount() {  
         return this._remainingShips.length;
     }
 
@@ -68,7 +70,7 @@ let BoardData = class{
     * 
     * @return {Int} - Returns the id of the last sunk ship. Return null if no ship sunk.
     */
-    get lastSunkID(){
+    get lastSunkID() {
         if (this._sunkShip.length === 0){
             return null;
         }
