@@ -3,7 +3,8 @@
  * It will keep track of damages, it's position, and will allow for
  * guesses on it.
  */
-const Utilities = require("./utilities");
+const Guesses = require("./utilities");
+
 
 let ShipData = class{
     constructor(coordinateArray, id = 0){
@@ -27,9 +28,9 @@ let ShipData = class{
                 this._hitPositions.push(currentPosition);
                 this._activePositions.splice(i, 1);
                 if (this.isSunk()){
-                    return Utilities.Guesses.SINK;
+                    return Guesses.SINK;
                 }
-                return Utilities.Guesses.HIT;
+                return Guesses.HIT;
             }
         }
         return Guesses.MISS;
@@ -49,3 +50,5 @@ let ShipData = class{
         return this._id;
     }
 }
+
+module.exports = ShipData

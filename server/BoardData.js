@@ -5,7 +5,7 @@
  */
 
 const ShipData = require("./ShipData");
-const Utilities = require("./utilities");
+const Guesses = require("./utilities");
 
 let BoardData = class{
 
@@ -14,8 +14,17 @@ let BoardData = class{
          * @param {Array[ShipData]} - Contains all of the ships to the board.
          */
         this._guesses = [];
-        this._remainingShips = shipArray;
         this._sunkShip = [];
+        this._remainingShips = shipArray;
+
+        for (let i = 0; i < shipArray.length; i++){
+            const ship = shipArray[i];
+            if (ship.isSunk()){
+                this._remainingShips.splice(i, 1);
+                this._sunkShip.push(ship);
+            }
+        }
+        
     }
 
     /**
@@ -26,22 +35,22 @@ let BoardData = class{
      * @return {Guesses} - Returns whether the guess is a hit/miss/sink.
      */
     guess(x, y){
-        this._guesses.push(new Coordinate(x, y));
+        this._guesses.push({x: x, y: y});
 
         for (let i = 0; i < this._remainingShips.length; i++){
-            ship = this._remainingShips[i];
-            classification = ship.guess(x, y)
-            if (classification === Utilities.Guesses.HIT){
-                return Utilities.Guesses.HIT;
+            let ship = this._remainingShips[i];
+            let classification = ship.guess(x, y)
+            if (classification === Guesses.HIT){
+                return Guesses.HIT;
 
             }
-            else if (classification === Utilities.Guesses.SINK){
+            else if (classification === Guesses.SINK){
                 this._remainingShips.splice(i, 1);
                 this._sunkShip.push(ship);
-                return Utilities.Guesses.SINK;
+                return Guesses.SINK;
             }
         }
-        return Utilities.Guesses.MISS;
+        return Guesses.MISS;
     }
 
     /**
@@ -66,3 +75,5 @@ let BoardData = class{
         return this._sunkShip[this._sunkShip.length - 1].id;
     }
 }
+
+module.exports = BoardData;

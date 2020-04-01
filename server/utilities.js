@@ -6,3 +6,5 @@ const Guesses = Object.freeze({
     MISS : Symbol("Miss"),
     SINK : Symbol("Sink")
 });
+
+module.exports =  Guesses;
