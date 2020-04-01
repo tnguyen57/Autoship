@@ -6,10 +6,12 @@
 let Coordinate = {x: a , y: b};
 
 
+
+/**
+* Enum to contain the three choices of a guess
+*/
 const Guesses = Object.freeze({
-    /**
-     * Enum to contain the three choices of a guess
-     */
+    
     HIT : Symbol("Hit"),
     MISS : Symbol("Miss"),
     SINK : Symbol("Sink")

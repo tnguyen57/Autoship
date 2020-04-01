@@ -18,15 +18,14 @@ let GameBoardData = class{
         this._sunkShip = new Array();
     }
 
+    /**
+     * Make a guess on the board
+     * @param {Int} x - x coordinate of the guess
+     * @param {Int} y - y coordinate of the guess
+     * @modify - Make the ship as sunken/hit if the guess succeed
+     * @return {Guesses} - Returns whether the guess is a hit/miss/sink.
+     */
     guess(x, y){
-        /**
-         * Make a guess on the board
-         * @param {Int} x - x coordinate of the guess
-         * @param {Int} y - y coordinate of the guess
-         * @modify - Make the ship as sunken/hit if the guess succeed
-         * @return {Guesses} - Returns whether the guess is a hit/miss/sink.
-         */
-
         this._guesses.push(new Coordinate(x, y));
 
         for (let i = 0; i < this._remainingShips.length; i++){
@@ -45,17 +44,23 @@ let GameBoardData = class{
         return Guesses.MISS;
     }
 
+    /**
+    * Return the number of ships remaining.
+    * 
+    * @return {Int} - Corresponds to the number of ships on the board.
+    */
     get shipCount(){
-        /**
-         * @return {Int} - Returns the number of ships left
-         */
+        
         return this._remainingShips.length;
     }
 
-    get lastShipID(){
-        /**
-         * @return {Int} - Returns the id of the last sunk ship. Return null if no ship sunk.
-         */
+
+    /**
+    * Returns the ID of the last sunk simp
+    * 
+    * @return {Int} - Returns the id of the last sunk ship. Return null if no ship sunk.
+    */
+    get lastSunkID(){
         if (this._sunkShip.length == 0){
             return null;
         }
