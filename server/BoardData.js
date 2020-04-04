@@ -11,13 +11,17 @@ let BoardData = class {
     /**
     * Construct the board given an array of ships.
     * 
-    * @param {Array[ShipData]} - Contains all of the ships to the board.
+    * @param {Array[ShipData]} shipArray- Contains all of the ships to the board.
+    * @param {Array[ShipData]} xSize- The 'width' of the board
+    * @param {Array[ShipData]} ySize- The 'length' of the board
     */
-    constructor(shipArray) {
+    constructor(shipArray, xSize = 10, ySize = 10) {
         
         this._guesses = [];
         this._sunkShip = [];
         this._remainingShips = shipArray;
+        this._xSize = xSize;
+        this.ySize = ySize;
 
         for (let i = 0; i < shipArray.length; i++) {
             const ship = shipArray[i];
@@ -73,6 +77,24 @@ let BoardData = class {
             return null;
         }
         return this._sunkShip[this._sunkShip.length - 1].id;
+    }
+
+    /**
+    * Returns the width of the board of the last sunk simp
+    * 
+    * @return {Int} - Returns the width of the board. Stored in xSize
+    */
+    get width() {
+        return this._xSize;
+    }
+
+    /**
+    * Returns the length of the board of the last sunk simp
+    * 
+    * @return {Int} - Returns the length of the board. Stored in ySize
+    */
+    get length() {
+        return this._ySize;
     }
 }
 
