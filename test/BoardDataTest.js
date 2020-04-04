@@ -10,6 +10,9 @@ describe('BoardData', function() {
           a = [{x: 1, y: 2}, {x: 2, y: 2}];
           b = [{x: 5, y: 6}, {x: 6, y: 6}];
           let Board = new BoardData([new ShipData(a, 1), new ShipData(b, 2)]);
+          assert.equal(Board.shipCount, 2);
+          assert.equal(Board.width, 10);
+          assert.equal(Board.height, 10);
         }),
         it('should be able to classify empty ships as sunk', function() {
             a = [{x: 1, y: 2}, {x: 2, y: 2}];

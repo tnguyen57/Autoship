@@ -20,8 +20,8 @@ let BoardData = class {
         this._guesses = [];
         this._sunkShip = [];
         this._remainingShips = shipArray;
-        this._xSize = xSize;
-        this.ySize = ySize;
+        this._length = xSize;
+        this._height = ySize;
 
         for (let i = 0; i < shipArray.length; i++) {
             const ship = shipArray[i];
@@ -85,16 +85,16 @@ let BoardData = class {
     * @return {Int} - Returns the width of the board. Stored in xSize
     */
     get width() {
-        return this._xSize;
+        return this._length;
     }
 
     /**
-    * Returns the length of the board of the last sunk simp
+    * Returns the height of the board of the last sunk simp
     * 
     * @return {Int} - Returns the length of the board. Stored in ySize
     */
-    get length() {
-        return this._ySize;
+    get height() {
+        return this._height;
     }
 }
 
