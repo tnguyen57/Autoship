@@ -23,10 +23,28 @@
     "url": "https://github.com/tnguyen57/Autoship/issues"
   },
   "homepage": "https://github.com/tnguyen57/Autoship#readme",
+  "husky": {
+     "hooks": {
+       "pre-commit": "lint-staged"
+     }
+  },
+  "lint-staged": {
+    "index.js": [
+      "./node_modules/.bin/eslint --fix"
+    ],
+    "server/*.js": [
+      "./node_modules/.bin/eslint --fix"
+    ]
+  },
   "dependencies": {
     "@koa/router": "^8.0.8",
-    "koa": "^2.11.0",
     "mocha": "^7.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.1"
   },
   "scripts": {
     "test": "mocha"
