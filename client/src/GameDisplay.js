@@ -1,4 +1,5 @@
 import React from 'react';
+import './GameDisplay.css';
 
 /**
  * Displays a blank board using SVG. The board accepts child nodes,
@@ -9,7 +10,7 @@ import React from 'react';
 export default function GameDisplay(props) {
   const { width, id } = props;
   return (
-    <svg width={width} height={width} id={id}>
+    <svg width={width} height={width} id={id} className="game-display">
       {props.children}
     </svg>
   );
