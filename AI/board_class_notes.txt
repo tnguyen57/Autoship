@@ -1,0 +1,18 @@
+board class (int width, int height)
+	holds ship objects
+	enum checkShot(int x, int y)
+	void printBoard() // Solely for test purposes
+
+ship class
+	vector<bool> data
+	enum orientation
+	top/left coordinate
+	string name (optional)
+
+	bool markHit(int x, int y)
+		return false if not sunk; true if sunk
+
+
+
+Possible features:
+	hiding sinking notification
