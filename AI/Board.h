@@ -13,11 +13,11 @@ public:
 	Ship(unsigned int _size, std::string _name);
 	~Ship(){}
 
-	bool isSunk(); // Whether the ship is sunk or not
-	unsigned int getSize(); // Total length of ship
-	unsigned int getHealth(); // Remaining "health" of the ship in number of unhit segments
+	bool isSunk() { return sunk; } // Whether the ship is sunk or not
+	unsigned int getSize() { return size; } // Total length of ship
+	unsigned int getHealth() { return health; } // Remaining "health" of the ship in number of unhit segments
 	bool processHit(); // Subtract 1 health from ship and return whether or not the ship has sunk
-	std::string getName(); // Returns the ship name
+	std::string getName() { return name; } // Returns the ship name
 
 private:
 	unsigned int size;
@@ -32,17 +32,40 @@ public:
 
 	//CONSTRUCTORS
 	Node(unsigned int x, unsigned int y);
-	~Node(){} //Destructor for formality's sake.
+	~Node();
 
-	bool isRevealed(); // True means that the tile has been hit, false if not hit yet
+	void setShip(Ship* _ship) { ship = _ship; }
+
+	bool isRevealed() { return revealed; } // True means that the tile has been hit, false if not hit yet
 	bool getShipInfo(std::string &shipName, unsigned int &shipSize,
 						unsigned int &shipHealth); // Returns all ship information available and shoots the ship
 
+private:
+	Ship* ship;
+	bool revealed;
+};
+
+class Board
+{
+public:
+	Board(unsigned int height, unsigned int width, Ships** _ships, unsigned int _numShips);
+	~Board();
+
+	bool checkSpace(unsigned int i, unsigned int j) { return data[i][j].isRevealed(); }
+	bool attackSpace(bool &sunk);
+
+	unsigned int getHeight() { return height; }
+	unsigned int getWidth() { return width; }
+	unsigned int remainingShips() { return numShips; }
+	unsigned int getTurn() { return turns; }
 
 private:
-	unsigned int location0; //Holds the i location of a pixel
-	unsigned int location1; //Holds the j location of a pixel
-	Ship* ship;
+	Node** data;
+	Ship** ships;
+	unsigned int numShips;
+	unsigned int turns;
+	unsigned int height;
+	unsigned int width;
 };
 
 #endif
