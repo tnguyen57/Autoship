@@ -5,9 +5,9 @@
 #include "mtrand.h"
 #include "Board.h"
 
-Board loadBoard(std::ifstream& in, Ship** ships)
+Board loadBoard(std::ifstream& in)
 {
-
+	
 }
 
 /*

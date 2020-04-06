@@ -81,8 +81,9 @@ bool Board::attackSpace(unsigned int i, unsigned int j, bool &sunk)
 	return true;
 }
 
-void Board::addShip(unsigned int* i, unsigned int* j, Ship* _ship, unsigned int _size)
+void Board::addShip(unsigned int* i, unsigned int* j, Ship* _ship, unsigned int _size, unsigned int number)
 {
 	for (unsigned int k = 0; k < _size; k++)
 		data[i[k]][j[k]].setShip(_ship);
+	ships[number] = _ship;
 }

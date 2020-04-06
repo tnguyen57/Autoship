@@ -55,7 +55,7 @@ public:
 	bool checkSpace(unsigned int i, unsigned int j) { return data[i][j].isRevealed(); }
 	bool attackSpace(unsigned int i, unsigned int j, bool &sunk);
 
-	void addShip(unsigned int* i, unsigned int* j, Ship* _ship, unsigned int _size);
+	void addShip(unsigned int* i, unsigned int* j, Ship* _ship, unsigned int _size, unsigned int number);
 
 	unsigned int getHeight() { return height; }
 	unsigned int getWidth() { return width; }
