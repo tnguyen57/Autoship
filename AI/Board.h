@@ -36,6 +36,7 @@ public:
 
 	void setShip(Ship* _ship) { ship = _ship; }
 
+	bool hasShip();
 	bool isRevealed() { return revealed; } // True means that the tile has been hit, false if not hit yet
 	bool getShipInfo(std::string &shipName, unsigned int &shipSize,
 						unsigned int &shipHealth); // Returns all ship information available and shoots the ship
@@ -48,12 +49,13 @@ private:
 class Board
 {
 public:
-	Board(unsigned int height, unsigned int width, Ships** _ships, unsigned int _numShips);
+	Board(unsigned int height, unsigned int width, unsigned int _numShips);
 	~Board();
 
 	bool checkSpace(unsigned int i, unsigned int j) { return data[i][j].isRevealed(); }
 	bool attackSpace(bool &sunk);
 
+	void addShip(unsigned int i, unsigned int j, Ship* _ship);
 	unsigned int getHeight() { return height; }
 	unsigned int getWidth() { return width; }
 	unsigned int remainingShips() { return numShips; }
