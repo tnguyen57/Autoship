@@ -31,8 +31,8 @@ class Node
 public:
 
 	//CONSTRUCTORS
-	Node(unsigned int x, unsigned int y);
-	~Node();
+	Node();
+	~Node() {}
 
 	void setShip(Ship* _ship) { ship = _ship; }
 
@@ -49,13 +49,13 @@ private:
 class Board
 {
 public:
-	Board(unsigned int height, unsigned int width, unsigned int _numShips);
+	Board(unsigned int _height, unsigned int _width, unsigned int _numShips);
 	~Board();
 
 	bool checkSpace(unsigned int i, unsigned int j) { return data[i][j].isRevealed(); }
 	bool attackSpace(bool &sunk);
 
-	void addShip(unsigned int i, unsigned int j, Ship* _ship);
+	void addShip(unsigned int i, unsigned int j, Ship* _ship, unsigned int _size);
 	unsigned int getHeight() { return height; }
 	unsigned int getWidth() { return width; }
 	unsigned int remainingShips() { return numShips; }
