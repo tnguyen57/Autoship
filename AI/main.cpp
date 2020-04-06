@@ -80,7 +80,8 @@ int main(int argc, char** argv)
 		g.findNextMove(i, j);
 		moveOutput << i << " " << j << std::endl;
 	}
-	g.Win();
+	if (debuggingOutput)
+		g.Win();
 
 	return 0;
 }
