@@ -41,11 +41,12 @@ bool Node::getShipInfo(std::string &shipName, unsigned int &shipSize,
 	return ship->processHit(); // returns true for a sunk ship and false for no sunk ship
 }
 
-Board::Board(unsigned int _height, unsigned int _width, unsigned int _numShips)
+Board::Board(unsigned int _height, unsigned int _width, unsigned int _numShips, Ship** _ships)
 {
 	height = _height;
 	width = _width;
 	numShips = _numShips;
+	ships = _ships;
 	turns = 0;
 	data = new Node*[height];
 	for (unsigned int i = 0; i < height; i++)
@@ -67,4 +68,21 @@ Board::~Board()
 	width = 0;
 	turns = 0;
 	numShips = 0;
+}
+
+bool Board::attackSpace(unsigned int i, unsigned int j, bool &sunk)
+{
+	if (!data[i][j].hasShip())
+		return false;
+	std::string shipName;
+	unsigned int shipSize;
+	unsigned int shipHealth;
+	sunk = data[i][j].getShipInfo(shipName, shipSize, shipHealth);
+	return true;
+}
+
+void Board::addShip(unsigned int* i, unsigned int* j, Ship* _ship, unsigned int _size)
+{
+	for (unsigned int k = 0; k < _size; k++)
+		data[i[k]][j[k]].setShip(_ship);
 }
