@@ -52,15 +52,22 @@ public:
 	Board(unsigned int _height, unsigned int _width, unsigned int _numShips, Ship** _ships);
 	~Board();
 
-	bool checkSpace(unsigned int i, unsigned int j) { return data[i][j].isRevealed(); }
+	bool checkSpace(unsigned int i, unsigned int j) const { return data[i][j].isRevealed(); }
+	bool checkHit(unsigned int i, unsigned int j) const { return data[i][j].hasShip(); }
 	bool attackSpace(unsigned int i, unsigned int j, bool &sunk);
+	void clear();
 
 	void addShip(unsigned int* i, unsigned int* j, Ship* _ship, unsigned int _size, unsigned int number);
 
-	unsigned int getHeight() { return height; }
-	unsigned int getWidth() { return width; }
-	unsigned int remainingShips() { return numShips; }
-	unsigned int getTurn() { return turns; }
+	unsigned int getHeight() const { return height; }
+	unsigned int getNumShips() const { return numShips; }
+	unsigned int getWidth() const { return width; }
+	unsigned int remainingShips() const { return numShips - sunkShips; }
+	unsigned int getTurn() const { return turns; }
+	std::string getShipName(unsigned int i) const { return ships[i]->getName(); }
+	unsigned int getShipHealth(unsigned int i) const { return ships[i]->getHealth(); }
+	unsigned int getShipSize(unsigned int i) const { return ships[i]->getSize(); }
+
 
 private:
 	Node** data;
@@ -69,6 +76,9 @@ private:
 	unsigned int turns;
 	unsigned int height;
 	unsigned int width;
+	unsigned int sunkShips;
 };
+
+std::ostream& operator<< (std::ostream& out, const Board& b);
 
 #endif
