@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
-#include <vector>
 #include <fstream>
 #include <cassert>
 #include "mtrand.h"
 #include "Board.h"
+#include <time.h>
+#include "MoveGenerator.h"
 
 /*
 Initializes the Board object from the input file.
@@ -40,9 +41,9 @@ Takes an input file of board data and an output file for move guesses.
 */
 int main(int argc, char** argv)
 {
-	if(argc != 4)
+	if(argc != 6)
 	{
-		std::cerr << "Proper usage is: " << argv[0] << " input_file.txt output_file.txt debugging_toggle." << std::endl;
+		std::cerr << "Proper usage is: " << argv[0] << " input_file.txt output_file.txt generator_type(1=random, 2=deterministic, 3=machine_learning) time_per_calculation debugging_toggle(true=output_on, false=output_off)." << std::endl;
 		return -1;
 	}
 
@@ -55,11 +56,9 @@ int main(int argc, char** argv)
 	Board b = loadBoard(boardInput);
 
 	bool debuggingOutput = false;
-	std::string out_put = argv[3];
+	std::string out_put = argv[5];
 	if (out_put == "true")
-	{
 		debuggingOutput = true;
-	}
 
 	if (debuggingOutput)
 		std::cout << b << std::endl;
@@ -70,6 +69,18 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
+	unsigned int generatorType = atoi(argv[3]);
+	unsigned int timePerCalculation = atoi(argv[4]);
+
+	MoveGenerator g(timePerCalculation, generatorType, &b);
+
+	while (!g.solved())
+	{
+		unsigned int i, j;
+		g.findNextMove(i, j);
+		moveOutput << i << " " << j << std::endl;
+	}
+	g.Win();
 
 	return 0;
 }

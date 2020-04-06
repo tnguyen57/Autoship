@@ -1,11 +1,9 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include "mtrand.h"
 
 
-#ifndef __snake_H
-#define __snake_H
+#ifndef __Board_H
+#define __Board_H
 
 class Ship
 {
@@ -35,6 +33,7 @@ public:
 	~Node() {}
 
 	void setShip(Ship* _ship) { ship = _ship; }
+	void reveal() { revealed = true; }
 
 	bool hasShip();
 	bool isRevealed() { return revealed; } // True means that the tile has been hit, false if not hit yet
@@ -68,6 +67,7 @@ public:
 	unsigned int getShipHealth(unsigned int i) const { return ships[i]->getHealth(); }
 	unsigned int getShipSize(unsigned int i) const { return ships[i]->getSize(); }
 
+	bool gameOver() { return !remainingShips(); }
 
 private:
 	Node** data;

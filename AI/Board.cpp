@@ -1,7 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include "mtrand.h"
 #include "Board.h"
 
 Ship::Ship(unsigned int _size, std::string _name)
@@ -38,6 +36,7 @@ bool Node::getShipInfo(std::string &shipName, unsigned int &shipSize,
 	shipName = ship->getName();
 	shipSize = ship->getSize();
 	shipHealth = ship->getHealth();
+	reveal();
 	return ship->processHit(); // returns true for a sunk ship and false for no sunk ship
 }
 
@@ -84,7 +83,11 @@ void Board::clear()
 bool Board::attackSpace(unsigned int i, unsigned int j, bool &sunk)
 {
 	if (!data[i][j].hasShip())
+	{
+		turns++;
+		data[i][j].reveal();
 		return false;
+	}
 	std::string shipName;
 	unsigned int shipSize;
 	unsigned int shipHealth;
