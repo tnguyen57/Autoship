@@ -16,9 +16,17 @@ export default class GameState extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(x, y) {
+  async handleClick(x, y) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    const res = await fetch('/api/move', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    });
+    const json = await res.json();
     this.setState({
-      [`${x},${y}`]: Math.random() < 0.5 ? 'hit' : 'miss'
+      [`${x},${y}`]: json.state
     });
   }
 
