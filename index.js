@@ -1,16 +1,18 @@
-const Koa = require('koa');
-const Router = require('@koa/router');
+const Koa = require("koa");
+const Router = require("@koa/router");
 
 const app = new Koa();
 const router = new Router();
 
-router.get('/', (ctx, next) => {
-  ctx.body = 'Hello world';
+router.get("/api/move", ctx => {
+    ctx.body = {
+        state: Math.random() < 0.5 ? "hit" : "miss"
+    };
 });
 
 app
-  .use(router.routes())
-  .use(router.allowedMethods());
+    .use(router.routes())
+    .use(router.allowedMethods());
 
 /**
  * Start a game against an AI

@@ -1,0 +1,8 @@
+
+.square--miss {
+  fill: black;
+}
+
+.square--hit {
+  fill: red;
+}
