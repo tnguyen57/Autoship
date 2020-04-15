@@ -2,6 +2,7 @@
  * This class will act as a random AI. Creates a random board and make random guesses.
  */
 const ShipData = require("./ShipData");
+const miscFunctions = require("./miscFunctions");
 
 const RandomAI = class{
     constructor(width, height) {
@@ -39,18 +40,6 @@ const RandomAI = class{
     }
 
     /**
-     * Generates and return a random integer between 
-     * min (inclusive and max (exlucisve)
-     * 
-     * @param {Int} min - The lower inclusive bound of the  random integer generator
-     * @param {Int} max - The upper exclusive bound of the  random integer generator
-     * @return {Int} - The randomly generated integer between min (inclusive) and max (exclusive)
-     */
-    getRndInteger(min, max) {
-        return Math.floor(Math.random() * (max - min) ) + min;
-    }
-
-    /**
      * Helper function to check used coordinates to make sure generated ship is valid
      */
     checkShip(ship, usedCoordinates){
@@ -71,18 +60,19 @@ const RandomAI = class{
     
     /**
      * Generate an array of random ships that follows the basic rules of Battleship.
+     * @returns - An array of ShipData objects that is within the boundaries of the board with no overlap.
      */
     getBasicBoardShips() {
         let shipArray = [];
         let usedCoordinates = [];
         let firstTime = true;
-        let id = 1;
+        let id = 5;
         for (let i = 2; i < 6; i++) {
             let ship = this.getRandomShip(i, usedCoordinates);
             if (ship === null){
                 return null;
             }
-            shipArray.push(new ShipData(ship, id++));
+            shipArray.push(new ShipData(ship, id--));
             if(i === 3 && firstTime) {
                 i--;
                 firstTime = false;
@@ -97,10 +87,10 @@ const RandomAI = class{
      */
     getRandomShip(size, usedCoordinates){
         for (let i = 0; i < 20000; i++){
-            const index = this.getRndInteger(0, this._possibleGuesses.length);
+            const index = miscFunctions.getRndInteger(0, this._possibleGuesses.length);
             const start = this._possibleGuesses[index];
-            const orientation = this.getRndInteger(0, 2);
-            let ship = this.generateShip(size, start, orientation);
+            const orientation = miscFunctions.getRndInteger(0, 2);
+            let ship = miscFunctions.generateShip(size, start, orientation);
             if (this.checkShip(ship, usedCoordinates)){
                 for (let j = 0; j < size; j++){
                     usedCoordinates.push(ship[j]);
@@ -109,22 +99,6 @@ const RandomAI = class{
             }
         }
         return null;
-    }
-
-    /**
-     * Create an array of coordinates corresponding to a ship.
-     */
-    generateShip(size, start, orientation){
-        let ship = [];
-        for (let i = 0; i < size; i++){
-            if (orientation === 1){
-                ship.push({x: start.x, y: start.y + i});
-            }
-            else{
-                ship.push({x: start.x + i, y: start.y});
-            }
-        }
-        return ship;
     }
 }
 
