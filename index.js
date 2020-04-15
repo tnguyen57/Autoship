@@ -4,8 +4,10 @@ const Router = require("@koa/router");
 const app = new Koa();
 const router = new Router();
 
-router.get("/", (ctx, next) => {
-    ctx.body = "Hello world";
+router.post("/api/move", ctx => {
+    ctx.body = {
+        state: Math.random() < 0.5 ? "hit" : "miss"
+    };
 });
 
 app

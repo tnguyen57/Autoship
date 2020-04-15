@@ -30,13 +30,26 @@ export default class GameState extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(x, y) {
-    this.setState({
-      squares: {
-        [`${x},${y}`]: Math.random() < 0.5 ? 'hit' : 'miss',
-        ...this.state.squares
-      }
+  async handleClick(x, y) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    const res = await fetch('/api/move', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
     });
+    if(res.ok) {
+      const json = await res.json();
+      this.setState({
+        squares: {
+          [`${x},${y}`]: json.state,
+          ...this.state.squares
+        }
+      });
+    } else {
+      console.log(`Server returned code ${res.status}. Dev please implement error handling.`);
+    }
   }
 
   render() {
