@@ -18,15 +18,12 @@ MoveGenerator::MoveGenerator(unsigned int time, unsigned int genType, Board* boa
 	for (unsigned int i = 0; i < b->getHeight(); i++)
 	{
 		visited[i] = new bool[b->getWidth()];
-		for (unsigned int j = 0; j < b->getWidth(); j++)
-			visited[i][j] = false;
-	}
-
-	for (unsigned int i = 0; i < b->getHeight(); i++)
-	{
 		std::vector<unsigned int> temp;
 		for (unsigned int j = 0; j < b->getWidth(); j++)
+		{
+			visited[i][j] = false;
 			temp.push_back(j);
+		}
 		possibleLocations.push_back(temp);
 	}
 }
@@ -38,9 +35,8 @@ MoveGenerator::~MoveGenerator()
 
 void MoveGenerator::clear()
 {
-	for (unsigned int i = 0; i < b->getWidth(); i++) {
+	for (unsigned int i = 0; i < b->getWidth(); i++)
 		delete [] visited[i];
-	}
 	delete [] visited;
 }
 
@@ -48,11 +44,12 @@ void MoveGenerator::findNextMove(unsigned int &i, unsigned int &j)
 {
 	switch(generatorType)
 	{
-		case 1: randomGenerator(i, j); break;
+		case 1: randomGenerator(i, j); return;
+		case 2: deterministicGenerator(i, j); return;
 	}
 }
 
-void MoveGenerator::Win()
+void MoveGenerator::Win() const
 {
 	std::cout << "I reign victorious.\n" << *b << std::endl;
 }
@@ -79,4 +76,9 @@ void MoveGenerator::randomGenerator(unsigned int &x, unsigned int &y)
 	}
 	x = i;
 	y = k;
+}
+
+void MoveGenerator::deterministicGenerator(unsigned int &x, unsigned int &y)
+{
+	
 }

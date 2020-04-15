@@ -16,15 +16,16 @@ class MoveGenerator
 public:
 	MoveGenerator(unsigned int time, unsigned int genType, Board* board);
 	~MoveGenerator();
-	void clear();
 
 	void findNextMove(unsigned int &i, unsigned int &j);
-	void Win();
+	void Win() const;
 
-	bool solved() { return b->gameOver(); }
+	bool solved() const { return b->gameOver(); }
 	
 private:
+	void clear();
 	void randomGenerator(unsigned int &x, unsigned int &y);
+	void deterministicGenerator(unsigned int &x, unsigned int &y);
 
 	Board* b; // Board Object
 	bool** visited;
