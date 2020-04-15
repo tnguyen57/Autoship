@@ -15,12 +15,6 @@ function App() {
             </div>
         </Router>
     );
-    // return (
-    //   <div className="App">
-    //     <GameState id="self-board" size={10}/>
-    //     <GameState id="opponent-board" size={10}/>
-    //   </div>
-    // );
 }
 
 export default App;
