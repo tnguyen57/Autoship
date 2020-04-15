@@ -15,7 +15,7 @@ export default function GameDisplay(props) {
     <Ship
       key={ship.name}
       name={ship.name}
-      length{ship.length}
+      length={ship.length}
     />
   ));
   return (
