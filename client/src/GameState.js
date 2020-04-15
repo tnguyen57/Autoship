@@ -19,15 +19,20 @@ export default class GameState extends React.Component {
   async handleClick(x, y) {
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     const res = await fetch('/api/move', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({})
     });
-    const json = await res.json();
-    this.setState({
-      [`${x},${y}`]: json.state
-    });
+    if(res.ok) {
+      const json = await res.json();
+      this.setState({
+        [`${x},${y}`]: json.state
+      });
+    } else {
+      console.log(`Server returned code ${res.status}. Dev please implement error handling.`);
+    }
   }
 
   render() {
