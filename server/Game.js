@@ -15,13 +15,22 @@ let Game = class {
      * @param {Int} width;
      * @param {Int} height;
      */
-    constructor(shipArray1, shipArray2, id = 0, width = 10, height = 10){
-        this._board1 = new BoardData(shipArray1, width, height);
-        this._board2 = new BoardData(shipArray2, width, height);
+    constructor(id = 0, width = 10, height = 10){
+        this._board1 = null;
+        this._board2 = null;
         this._firstPlayer = true; //Contains the 
         this._id = id;
         this._width = width;
         this._height = height;
+    }
+
+    addShips(shipArray, playerOne){
+        if (playerOne){
+            this._board1 = new BoardData(shipArray, this._width, this._height);
+        }
+        else{
+            this._board2 = new BoardData(shipArray, this._width, this._height);
+        }
     }
 
     /**
@@ -30,15 +39,15 @@ let Game = class {
      * @param {Int} x - x coordinate of guess
      * @param {Int} y - y coordinate of guess
      * @modify - Set it to the second players turn
-     * @return {{firstPlayer:Boolean: , status:Guesses}} - Return an tuple containing the player and status. Player is true if first player. 
+     * @return {id: Int, result: Guesses} - Returns whether the guess is a hit/miss/sink and the id of the ship if hit/sink - Return an tuple containing the player and status. Player is true if first player. 
      */
     handleGuess(x, y){
         const firstPlayer = this._firstPlayer;
         this._firstPlayer = !(this._firstPlayer); //Swapping to next turn
         if (firstPlayer){
-            return {firstPlayer: firstPlayer, status:this._board2.guess(x, y)};
+            return this._board2.guess(x, y);
         }
-        return {firstPlayer: firstPlayer, status:this._board1.guess(x, y)};
+        return this._board1.guess(x, y);
     }
     
     /**
@@ -66,19 +75,6 @@ let Game = class {
      */
     get size(){
         return {width: this._width, height: this._height};
-    }
-
-    /**
-     * Returns the id of the last ship that sunk
-     * 
-     * @return {Int} - returns the game ID
-     */
-    get lastSunkID(){
-        if (this._firstPlayer){
-            return this._board1.lastSunkID;
-        }
-        return this._board2.lastSunkID;
-
     }
 
     /**
