@@ -21,9 +21,9 @@ router.post("/api/startBasicGame", ctx => {
         noBasicGame = false;
     }
     else{
-        ctx.body{
-            gameID: gameID;
-        }
+        ctx.body = {
+            gameID: gameID
+        };
         gameID++;
         noBasicGame = true;
     }
