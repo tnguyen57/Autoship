@@ -1,4 +1,4 @@
-
+const Guesses = require("./utilities");
 
 let miscFunctions = class{
     /**
@@ -30,6 +30,24 @@ let miscFunctions = class{
      */
     static getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min) ) + min;
+    }
+
+    /**
+     * Create a string using a Guess parameter
+     */
+    static convertGuess(result){
+        if (result === Guesses.HIT) {
+            return "hit";
+        }
+        else if (result === Guesses.MISS) {
+            return "miss";
+        }
+        else if (result === Guesses.SINK){
+            return "sink";
+        }
+        else {
+            return "error";
+        }
     }
 
 }
