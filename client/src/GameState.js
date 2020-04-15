@@ -7,24 +7,42 @@ import GameDisplay from './GameDisplay';
  * of existing square state (hit/miss/none), and handles user interaction.
  * Props:
  *  - size (int): the board size in squares
+ *  - ships ([record]): a list of pieces being used in the game
+ * State:
+ *  - squares ((x,y) -> string): the hit state of each square
+ *  - shipData ([record]): a (possibly empty) list of ships with coordinate data
  */
 export default class GameState extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      squares: {},
+      shipData: props.ships.map(ship => ({
+        name: ship.name,
+        length: ship.length,
+        x: NaN,
+        y: NaN,
+        rotation: 'vertical',
+        sunk: false
+      }))
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(x, y) {
     this.setState({
-      [`${x},${y}`]: Math.random() < 0.5 ? 'hit' : 'miss'
+      squares: {
+        [`${x},${y}`]: Math.random() < 0.5 ? 'hit' : 'miss',
+        ...this.state.squares
+      }
     });
   }
 
   render() {
     const {
       size,
+      ships,
       id
     } = this.props;
     const moves = [];
@@ -37,14 +55,14 @@ export default class GameState extends React.Component {
             x={x}
             y={y}
             boxSize={50}
-            hit={this.state[key] || 'none'}
+            hit={this.state.squares[key] || 'none'}
             onClick={this.handleClick}
           />
         );
       }
     }
     return (
-      <GameDisplay width={size * 50} id={id}>
+      <GameDisplay width={size * 50} id={id} ships={ships}>
         {moves}
       </GameDisplay>
     );

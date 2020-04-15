@@ -1,4 +1,6 @@
 
 .game-display {
-  margin: 1em;
+  display: inline-block;
+  max-width: 50%;
+  text-align: center;
 }
