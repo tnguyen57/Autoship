@@ -98,8 +98,7 @@ export default class GameState extends React.Component {
         const ship = newShipData[selectedShipIndex];
         newShipData[selectedShipIndex] = {
           ...ship,
-          x, y,
-          placement: 'tentative'
+          x, y
         }
       }
       return {
@@ -110,11 +109,28 @@ export default class GameState extends React.Component {
   }
 
   /**
-   * Selects the given ship.
+   * Selects the given ship and deselects any previously selected ship.
    */
   selectShip(idx) {
-    this.setState({
-      selectedShipIndex: idx
+    this.setState(state => {
+      const { selectedShipIndex, shipData } = state;
+      const newShipData = shipData.slice();
+      if(selectedShipIndex >= 0) {
+        newShipData[selectedShipIndex] = {
+          ...shipData[selectedShipIndex],
+          x: NaN,
+          y: NaN,
+          placement: 'none'
+        }
+      }
+      newShipData[idx] = {
+        ...shipData[idx],
+        placement: 'tentative'
+      }
+      return {
+        shipData: newShipData,
+        selectedShipIndex: idx
+      }
     });
   }
 
