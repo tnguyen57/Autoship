@@ -1,4 +1,5 @@
 import React from 'react';
+import Ship from './Ship';
 import Square from './Square';
 import GameDisplay from './GameDisplay';
 
@@ -25,9 +26,11 @@ export default class GameState extends React.Component {
         y: NaN,
         rotation: 'vertical',
         sunk: false
-      }))
+      })),
+      selectedShipIndex: -1
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleShipClick = this.handleShipClick.bind(this);
   }
 
   async handleClick(x, y) {
@@ -52,6 +55,12 @@ export default class GameState extends React.Component {
     }
   }
 
+  handleShipClick(idx) {
+    this.setState({
+      selectedShipIndex: idx
+    });
+  }
+
   render() {
     const {
       size,
@@ -74,8 +83,22 @@ export default class GameState extends React.Component {
         );
       }
     }
+    const shipComponents = ships.map((ship, idx) => (
+      <Ship
+        key={ship.name}
+        index={idx}
+        name={ship.name}
+        length={ship.length}
+        selected={this.state.selectedShipIndex === idx}
+        onClick={this.handleShipClick}
+      />
+    ));
     return (
-      <GameDisplay width={size * 50} id={id} ships={ships}>
+      <GameDisplay
+        width={size * 50}
+        id={id}
+        ships={shipComponents}
+      >
         {moves}
       </GameDisplay>
     );

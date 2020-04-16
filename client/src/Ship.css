@@ -17,3 +17,7 @@
 .ship-icon__sunk {
   background-color: gray;
 }
+
+.ship-underline__selected {
+  background-color: black;
+}
