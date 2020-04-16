@@ -25,14 +25,21 @@ export default class GameState extends React.Component {
         x: NaN,
         y: NaN,
         rotation: 'vertical',
+        placement: 'none',
         sunk: false
       })),
-      selectedShipIndex: -1
+      selectedShipIndex: -1,
+      hoveredSquare: null
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleShipClick = this.handleShipClick.bind(this);
+    this.handleSquareHover = this.handleSquareHover.bind(this);
+    this.rotateSelectedShip = this.rotateSelectedShip.bind(this);
   }
 
+  /**
+   * Submits a move to the server.
+   */
   async handleClick(x, y) {
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     const res = await fetch('/api/move', {
@@ -55,6 +62,56 @@ export default class GameState extends React.Component {
     }
   }
 
+  /**
+   * Rotates the selected tentatively placed ship.
+   */
+  rotateSelectedShip() {
+    this.setState(state => {
+      const { selectedShipIndex, shipData } = state;
+      if(selectedShipIndex >= 0) {
+        // toggle rotation of the selected ship
+        const newRotation =
+          shipData[selectedShipIndex].rotation === 'vertical' ? 'horizontal' : 'vertical';
+        const newShipData = shipData.slice();
+        newShipData[selectedShipIndex] = {
+          ...newShipData[selectedShipIndex],
+          rotation: newRotation
+        };
+        return {
+          shipData: newShipData
+        };
+      } else {
+        return {};
+      }
+    });
+  }
+
+  /**
+   * Moves the tentatively selected ship to the given square.
+   */
+  handleSquareHover(x, y) {
+    this.setState(state => {
+      const { selectedShipIndex, shipData } = state;
+      // set the selected ship to the hovered square
+      const newShipData = shipData.slice();
+      if(selectedShipIndex >= 0) {
+        const ship = newShipData[selectedShipIndex];
+        newShipData[selectedShipIndex] = {
+          ...ship,
+          x, y,
+          placement: 'tentative'
+        }
+      }
+      return {
+        shipData: newShipData,
+        hoveredSquare: { x, y }
+      };
+    });
+  }
+
+  /**
+   * Selects the given ship.
+   */
   handleShipClick(idx) {
     this.setState({
       selectedShipIndex: idx
@@ -67,6 +124,35 @@ export default class GameState extends React.Component {
       ships,
       id
     } = this.props;
+    const {
+      selectedShipIndex,
+      shipData,
+      squares,
+      hoveredSquare
+    } = this.state;
+    // highlight squares where ships are
+    const shipHighlight = {};
+    for(const ship of shipData) {
+      const { x, y, length, rotation, placement } = ship;
+      if(placement !== 'none') {
+        switch(rotation) {
+          case 'vertical':
+              if(y + length <= size) {
+                for(let i = 0; i < length; i++) {
+                  shipHighlight[`${x},${y + i}`] = placement;
+                }
+              }
+            break;
+          case 'horizontal':
+              if(x + length <= size) {
+                for(let i = 0; i < length; i++) {
+                    shipHighlight[`${x + i},${y}`] = placement;
+                }
+              }
+            break;
+        }
+      }
+    }
     const moves = [];
     for(let x = 0; x < size; x++) {
       for(let y = 0; y < size; y++) {
@@ -77,8 +163,11 @@ export default class GameState extends React.Component {
             x={x}
             y={y}
             boxSize={50}
-            hit={this.state.squares[key] || 'none'}
+            hit={squares[key] || 'none'}
+            ship={shipHighlight[key] || 'none'}
             onClick={this.handleClick}
+            onRightClick={this.rotateSelectedShip}
+            onHover={this.handleSquareHover}
           />
         );
       }
@@ -89,7 +178,7 @@ export default class GameState extends React.Component {
         index={idx}
         name={ship.name}
         length={ship.length}
-        selected={this.state.selectedShipIndex === idx}
+        selected={selectedShipIndex === idx}
         onClick={this.handleShipClick}
       />
     ));
