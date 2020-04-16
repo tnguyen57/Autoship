@@ -126,21 +126,24 @@ export default class GameState extends React.Component {
     const { size } = this.props;
     const res = {};
     for(const ship of this.state.shipData) {
-      const { x, y, length, rotation, placement } = ship;
+      const { length, rotation, placement } = ship;
+      let { x, y } = ship;
       if(placement !== 'none') {
         switch(rotation) {
           case 'vertical':
-              if(y + length <= size) {
-                for(let i = 0; i < length; i++) {
-                  res[`${x},${y + i}`] = placement;
-                }
+              if(y + length > size) {
+                y = size - length;
+              }
+              for(let i = 0; i < length; i++) {
+                res[`${x},${y + i}`] = placement;
               }
             break;
           case 'horizontal':
-              if(x + length <= size) {
-                for(let i = 0; i < length; i++) {
-                  res[`${x + i},${y}`] = placement;
-                }
+              if(x + length > size) {
+                x = size - length;
+              }
+              for(let i = 0; i < length; i++) {
+                res[`${x + i},${y}`] = placement;
               }
             break;
           default:
