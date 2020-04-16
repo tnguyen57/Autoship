@@ -28,8 +28,7 @@ export default class GameState extends React.Component {
         placement: 'none',
         sunk: false
       })),
-      selectedShipIndex: -1,
-      hoveredSquare: null
+      selectedShipIndex: -1
     };
     this.submitMove = this.submitMove.bind(this);
     this.selectShip = this.selectShip.bind(this);
@@ -60,6 +59,30 @@ export default class GameState extends React.Component {
     } else {
       console.log(`Server returned code ${res.status}. Dev please implement error handling.`);
     }
+  }
+
+  /**
+   * Comfirms ship placement and marks the selected ship as placed
+   * in its current location.
+   */
+  confirmSelectedShipPlacement() {
+    this.setState(state => {
+      const { selectedShipIndex, shipData } = state;
+      if(selectedShipIndex >= 0) {
+        const ship = shipData[selectedShipIndex];
+        const newShipData = shipData.slice();
+        newShipData[selectedShipIndex] = {
+          ...ship,
+          placement: 'present'
+        };
+        return {
+          shipData: newShipData,
+          selectedShipIndex: -1
+        }
+      } else {
+        return {};
+      }
+    });
   }
 
   /**
@@ -102,8 +125,7 @@ export default class GameState extends React.Component {
         }
       }
       return {
-        shipData: newShipData,
-        hoveredSquare: { x, y }
+        shipData: newShipData
       };
     });
   }
@@ -178,8 +200,7 @@ export default class GameState extends React.Component {
     } = this.props;
     const {
       selectedShipIndex,
-      squares,
-      hoveredSquare
+      squares
     } = this.state;
     // highlight squares where ships are
     const shipHighlight = this.getSquaresWithShips();
