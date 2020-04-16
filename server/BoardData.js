@@ -36,7 +36,7 @@ const BoardData = class {
      * @param {Int} x - x coordinate of the guess
      * @param {Int} y - y coordinate of the guess
      * @modify - Make the ship as sunken/hit if the guess succeed
-     * @return {Guesses} - Returns whether the guess is a hit/miss/sink.
+     * @return {id: Int, result:Guesses} - Returns whether the guess is a hit/miss/sink and the id of the ship if hit/sink
      */
     guess(x, y) {
         this._guesses.push({x: x, y: y});
@@ -45,14 +45,14 @@ const BoardData = class {
             const ship = this._remainingShips[i];
             const classification = ship.guess(x, y);
             if (classification === Guesses.HIT) {
-                return Guesses.HIT;
+                return {id: ship.id, result: Guesses.HIT};
             } else if (classification === Guesses.SINK) {
                 this._remainingShips.splice(i, 1);
                 this._sunkShip.push(ship);
-                return Guesses.SINK;
+                return {id: ship.id, result: Guesses.SINK};
             }
         }
-        return Guesses.MISS;
+        return {id: null, result: Guesses.MISS};
     }
 
     /**

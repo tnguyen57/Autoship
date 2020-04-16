@@ -21,9 +21,10 @@ const AIRunner = class {
 
   startAI(){
     const input_board = "./AI/Board" + this._id.toString() + ".txt";
-    const AI = spawn('./AI/t.exe', [input_board, 'out.txt', this._type, '5', 'false', 50]);
+    const AI = spawn('./AI/t.exe', [input_board, './AI/out.txt', this._type, '5', 'false', 50]);
     
     AI.stdout.on('data', (data) => {
+      console.log(data.toString());
       this._output += data.toString();
     });
     
@@ -60,7 +61,7 @@ const AIRunner = class {
    */
   retrieveGuess() {
     const guess = {x: this._output[0], y: this._output[2]};
-    this._output = this._output.substring(0, 4);
+    this._output = this._output.substring(4);
     return guess;
   }
 

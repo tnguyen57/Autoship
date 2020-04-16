@@ -88,7 +88,7 @@ int main(int argc, char** argv)
 		{
 			unsigned int i, j;
 			g.findNextMove(i, j);
-			//moveOutput << i << " " << j << std::endl;
+			moveOutput << i << " " << j << std::endl;
 			
 			std::cout << i << " " << j << std::endl;
 		}

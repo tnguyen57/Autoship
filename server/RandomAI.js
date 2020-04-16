@@ -27,7 +27,7 @@ const RandomAI = class{
     /**
      * Generates an array of all possible positions given board size
      * 
-     * @returns {Array[{x: Int, y: Int}]} - Returns an array of all possible positons on the board
+     * @returns {Array[{x: Int, y: Int}]} - Returns an array of all possible positions on the board
      */
     getAllPositions(width, height) {
         let positions = [];
@@ -72,6 +72,30 @@ const RandomAI = class{
                 return null;
             }
             shipArray.push(new ShipData(ship, id--));
+            if(i === 3 && firstTime) {
+                i--;
+                firstTime = false;
+            }
+        }
+        return shipArray;
+    }
+
+    /**
+     * Generate an array of random ships that follows the basic rules of Battleship.
+     * @returns - An array of ShipData objects that is within the boundaries of the board with no overlap.
+     */
+    getBasicBoardLocations() {
+        let shipArray = [];
+        let usedCoordinates = [];
+        let firstTime = true;
+        let id = 5;
+        for (let i = 2; i < 6; i++) {
+            let ship = this.getRandomShip(i, usedCoordinates);
+            if (ship === null){
+                return null;
+            }
+            shipArray.push(ship);
+            id--;
             if(i === 3 && firstTime) {
                 i--;
                 firstTime = false;
