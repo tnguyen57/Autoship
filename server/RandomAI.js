@@ -5,7 +5,7 @@ const ShipData = require("./ShipData");
 const miscFunctions = require("./miscFunctions");
 
 const RandomAI = class{
-    constructor(width, height) {
+    constructor(width = 10, height = 10) {
         this._possibleGuesses = this.getAllPositions(width, height);
         this._width = width;
         this._height = height;

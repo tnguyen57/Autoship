@@ -10,6 +10,11 @@ const router = new Router();
 let activeGames = {};
 let gameID = 0;
 let noBasicGame = true;
+const BoardAI = new RandomAI(10, 10);
+
+let Game0 = new Game(0, 10, 10);
+Game0.addShips(BoardAI.getBasicBoardShips() , true);
+Game0.addShips(BoardAI.getBasicBoardShips() , false);
 
 router.post("/api/startBasicGame", ctx => {
     if (noBasicGame){
@@ -58,8 +63,10 @@ router.post("/api/waitShips", ctx => {
 
 
 router.post("/api/move", ctx => {
-    let currentGame = activeGames[ctx.request.query.id];
-    const shipGuess = currentGame.handleGuess(ctx.request.query.x, ctx.request.query.y);
+    //let currentGame = activeGames[ctx.request.query.id];
+    //const shipGuess = currentGame.handleGuess(ctx.request.query.x, ctx.request.query.y);
+    console.log(ctx.request);
+    const shipGuess = Game0.handleGuess(ctx.request.query.x, ctx.request.query.y);
 
     ctx.body = {
         state: miscFunctions.convertGuess(shipGuess.result),
