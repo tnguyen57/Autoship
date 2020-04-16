@@ -7,13 +7,6 @@
 const BoardData = require("./BoardData");
 const Guesses = require("./utilities");
 
-var gameCount = 0;
-
-function incrementCount(){
-    gameCount++;
-}
-
-
 let Game = class {
     /**
      * Construct a Basic Game using two ship arrays
@@ -22,14 +15,13 @@ let Game = class {
      * @param {Int} width;
      * @param {Int} height;
      */
-    constructor(shipArray1, shipArray2, width = 10, height = 10){
+    constructor(shipArray1, shipArray2, id = 0, width = 10, height = 10){
         this._board1 = new BoardData(shipArray1, width, height);
         this._board2 = new BoardData(shipArray2, width, height);
         this._firstPlayer = true; //Contains the 
-        this._id = gameCount;
+        this._id = id;
         this._width = width;
         this._height = height;
-        incrementCount();
     }
 
     /**
