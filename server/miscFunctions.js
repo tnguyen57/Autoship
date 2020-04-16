@@ -1,4 +1,5 @@
 const Guesses = require("./utilities");
+var fs = require('fs');
 
 let miscFunctions = class{
     /**
@@ -49,6 +50,48 @@ let miscFunctions = class{
             return "error";
         }
     }
+
+    /**
+     * Write a ship array to a file to be processed by the AI.
+     * 
+     * Requires. Being in the main directory.
+     * @param {*} id 
+     * @param {*} shipArray 
+     * @param {*} width 
+     * @param {*} height 
+     */
+    static writeShipArrayToFile(id, shipData,  width, height){
+        const filename = "./AI/Board" + id.toString() + ".txt";
+
+        fs.writeFileSync(filename, width.toString() + " " + height.toString() + "\n", function(err) {
+            if (err) throw err;
+        });
+
+        fs.appendFileSync(filename, shipData.length.toString() + "\n", function(err) {
+            if (err) throw err;
+        });
+
+        for (let i = 0; i < shipData.length; i++){
+            const ship = shipData[i];
+            fs.appendFileSync(filename, ship.length.toString()+ " ", function(err) {
+                if (err) throw err;
+            });
+
+            for (let j = 0; j < ship.length; j++){
+                fs.appendFileSync(filename, ship[j].x + " " + ship[j].y + " ", function(err) {
+                    if (err) throw err;
+                });
+            }
+            fs.appendFileSync(filename, "\n", function(err) {
+                if (err) throw err;
+            });
+        }
+        
+
+        fs.appendFileSync(filename,  "end", function(err) {
+            if (err) throw err;
+        });
+   }
 
 }
 

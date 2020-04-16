@@ -1,3 +1,4 @@
+const { spawnSync } = require('child_process');
 const { spawn } = require('child_process');
 
 const AIRunner = class {
@@ -19,8 +20,8 @@ const AIRunner = class {
    */
 
   startAI(){
-    const input_board = "../AI/BOARD" + this._id.toString() + ".txt";
-    const AI = spawn('../AI/a.out', [input_board, 'out.txt', this._type, '5', 'false', 50]);
+    const input_board = "./AI/Board" + this._id.toString() + ".txt";
+    const AI = spawn('./AI/t.exe', [input_board, 'out.txt', this._type, '5', 'false', 50]);
     
     AI.stdout.on('data', (data) => {
       this._output += data.toString();
@@ -33,6 +34,25 @@ const AIRunner = class {
     AI.on('close', (code) => {
       console.log(`AI ${this._id} exited with code ${code}`);
     });
+  }
+
+  /**
+   * Start the AI in sync with the program. Blocks execution until finish.
+   * 
+   * @modify {*} this._output - Changed to include the output of AI file.
+   */
+
+  startAISync(){
+    const input_board = "./AI/Board" + this._id.toString() + ".txt";
+    const AI = spawnSync('./AI/t.exe', [input_board, 'out.txt', this._type, '5', 'false', 50]);
+
+    this._output += AI.stdout.toString();
+
+    console.log(AI.stderr.toString());
+
+
+    console.log(`AI ${this._id} exited with code ${AI.status.toString()}`);
+
   }
 
   /**

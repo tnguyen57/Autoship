@@ -45,11 +45,10 @@ const RandomAI = class{
     checkShip(ship, usedCoordinates){
         for(let i = 0; i < ship.length; i++){
             const coord = ship[i];
+            if (coord.x >= this._width || coord.y >= this._height){
+                return false;
+            }
             for(let j = 0; j < usedCoordinates.length; j++){
-                if (coord.x >= this._width || coord.y >= this._height){
-                    return false;
-        
-                }
                 if (coord.x === usedCoordinates[j].x && coord.y === usedCoordinates[j].y){
                     return false;
                 }
@@ -79,8 +78,8 @@ const RandomAI = class{
             }
         }
         return shipArray;
-
     }
+    
 
     /**
      * Generate random ship
