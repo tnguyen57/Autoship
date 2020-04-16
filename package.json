@@ -24,9 +24,9 @@
   },
   "homepage": "https://github.com/tnguyen57/Autoship#readme",
   "husky": {
-     "hooks": {
-       "pre-commit": "lint-staged"
-     }
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "index.js": [
