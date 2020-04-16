@@ -26,7 +26,7 @@ private:
 	void clear(); // Deallocates any memory on the heap.
 	void randomGenerator(unsigned int &x, unsigned int &y); // Generates a move randomly using the MT random generator
 	void deterministicGenerator(unsigned int &x, unsigned int &y); // Generates a move based on a PDF of all possible ship locations (calculated within a certain time tolerance)
-	void generatePossibleShipLocations(unsigned long long& **shipsOnTile_, unsigned int i, unsigned int j,
+	void generatePossibleShipLocations(unsigned long long** &shipsOnTile_, unsigned int i, unsigned int j,
 			unsigned int **boardRepresentation_, const Board& b, unsigned int shipNumber, bool hitShip); // Recursive method for generating all possible ship locations
 
 	Board* b; // Board Object

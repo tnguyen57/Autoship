@@ -81,12 +81,16 @@ int main(int argc, char** argv)
 		unsigned int timePerCalculation = atoi(argv[4]); // Time is in seconds
 
 		MoveGenerator g(timePerCalculation, generatorType, &b);
+		
+		setvbuf(stdout, NULL, _IONBF, 0);
 
 		while (!g.solved())
 		{
 			unsigned int i, j;
 			g.findNextMove(i, j);
-			moveOutput << i << " " << j << std::endl;
+			//moveOutput << i << " " << j << std::endl;
+			
+			std::cout << i << " " << j << std::endl;
 		}
 		if (debuggingOutput)
 			g.Win();

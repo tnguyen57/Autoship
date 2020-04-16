@@ -133,7 +133,7 @@ void MoveGenerator::deterministicGenerator(unsigned int &x, unsigned int &y)
 	generatePossibleShipLocations(shipsOnTile, x, y, boardRepresentation, *b, s, unsunk);
 }
 
-void MoveGenerator::generatePossibleShipLocations(unsigned long long& **shipsOnTile_, unsigned int i, unsigned int j,
+void MoveGenerator::generatePossibleShipLocations(unsigned long long** &shipsOnTile_, unsigned int i, unsigned int j,
 			unsigned int **boardRepresentation_, const Board& b, unsigned int shipNumber, bool hitShip)
 {
 
