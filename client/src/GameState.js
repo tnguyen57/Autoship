@@ -23,7 +23,10 @@ export default class GameState extends React.Component {
   }
 
   render() {
-    const size = this.props.size;
+    const {
+      size,
+      id
+    } = this.props;
     const moves = [];
     for(let x = 0; x < size; x++) {
       for(let y = 0; y < size; y++) {
@@ -41,7 +44,7 @@ export default class GameState extends React.Component {
       }
     }
     return (
-      <GameDisplay width={size * 50}>
+      <GameDisplay width={size * 50} id={id}>
         {moves}
       </GameDisplay>
     );

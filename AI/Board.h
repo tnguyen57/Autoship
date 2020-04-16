@@ -54,7 +54,8 @@ public:
 	void setShip(Ship* _ship) { ship = _ship; }
 	void reveal() { revealed = true; }
 
-	bool hasShip() const ;
+	bool hasShip() const;
+	bool isSunk() { return ship->isSunk(); }
 	bool isRevealed() const  { return revealed; } // True means that the tile has been hit, false if not hit yet
 	bool getShipInfo(std::string &shipName, unsigned int &shipSize,
 						unsigned int &shipHealth); // Returns all ship information available and shoots the ship
@@ -85,6 +86,7 @@ public:
 	bool checkSpace(unsigned int i, unsigned int j) const { return data[i][j].isRevealed(); } // Checks if a spot has already been attacked
 	bool checkHit(unsigned int i, unsigned int j) const { return data[i][j].hasShip(); } // Checks if a Node has a Ship on it
 	bool attackSpace(unsigned int i, unsigned int j, bool &sunk); // Returns if the space hit a ship, and sunk returns whether it sunk a ship
+	bool sunkSpace(unsigned int i, unsigned int j) { return data[i][j].isSunk(); }
 
 	void addShip(unsigned int* i, unsigned int* j, Ship* _ship, unsigned int _size, unsigned int number); // Assigns a ship to a Node object
 
