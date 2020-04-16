@@ -9,6 +9,7 @@ import GameDisplay from './GameDisplay';
  * Props:
  *  - size (int): the board size in squares
  *  - ships ([record]): a list of pieces being used in the game
+ *  - kind (string): the board kind, one of 'self', 'opponent'
  * State:
  *  - squares ((x,y) -> string): the hit state of each square
  *  - shipData ([record]): a (possibly empty) list of ships with coordinate data
@@ -34,6 +35,16 @@ export default class GameState extends React.Component {
     this.selectShip = this.selectShip.bind(this);
     this.moveSelectedShipToSquare = this.moveSelectedShipToSquare.bind(this);
     this.rotateSelectedShip = this.rotateSelectedShip.bind(this);
+    this.handleSquareClick = this.handleSquareClick.bind(this);
+  }
+
+  handleSquareClick(x, y) {
+    const { kind } = this.props;
+    if(kind === 'self') {
+      this.confirmSelectedShipPlacement();
+    } else {
+      this.submitMove(x, y);
+    }
   }
 
   /**
@@ -216,7 +227,7 @@ export default class GameState extends React.Component {
             boxSize={50}
             hit={squares[key] || 'none'}
             ship={shipHighlight[key] || 'none'}
-            onClick={this.submitMove}
+            onClick={this.handleSquareClick}
             onRightClick={this.rotateSelectedShip}
             onHover={this.moveSelectedShipToSquare}
           />
