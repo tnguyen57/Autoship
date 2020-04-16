@@ -13,8 +13,7 @@ Ship::Ship(unsigned int _size, std::string _name)
 bool Ship::processHit()
 {
 	health--;
-	sunk = !health;
-	return sunk;
+	return sunk = !health;
 }
 
 Node::Node()
@@ -23,7 +22,7 @@ Node::Node()
 	ship = NULL;
 }
 
-bool Node::hasShip()
+bool Node::hasShip() const
 {
 	if (!ship)
 		return false;
@@ -55,11 +54,6 @@ Board::Board(unsigned int _height, unsigned int _width, unsigned int _numShips, 
 		for (unsigned int j = 0; j < width; j++)
 			data[i][j] = Node();
 	}
-}
-
-Board::~Board()
-{
-	clear();
 }
 
 void Board::clear()
