@@ -27,7 +27,7 @@ export default class GameState extends React.Component {
         y: NaN,
         rotation: 'vertical',
         placement: 'none',
-        sunk: false
+        sunk: props.kind === 'self'
       })),
       selectedShipIndex: -1
     };
@@ -84,6 +84,7 @@ export default class GameState extends React.Component {
         const newShipData = shipData.slice();
         newShipData[selectedShipIndex] = {
           ...ship,
+          sunk: false,
           placement: 'present'
         };
         return {
@@ -158,6 +159,7 @@ export default class GameState extends React.Component {
       }
       newShipData[idx] = {
         ...shipData[idx],
+        sunk: true,
         placement: 'tentative'
       }
       return {
@@ -206,11 +208,11 @@ export default class GameState extends React.Component {
   render() {
     const {
       size,
-      ships,
       id
     } = this.props;
     const {
       selectedShipIndex,
+      shipData,
       squares
     } = this.state;
     // highlight squares where ships are
@@ -234,12 +236,13 @@ export default class GameState extends React.Component {
         );
       }
     }
-    const shipComponents = ships.map((ship, idx) => (
+    const shipComponents = shipData.map((ship, idx) => (
       <Ship
         key={ship.name}
         index={idx}
         name={ship.name}
         length={ship.length}
+        sunk={ship.sunk}
         selected={selectedShipIndex === idx}
         onClick={this.selectShip}
       />
