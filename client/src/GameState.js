@@ -37,7 +37,7 @@ export default class GameState extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({x: x, y: y})
     });
     if(res.ok) {
       const json = await res.json();

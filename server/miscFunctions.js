@@ -37,14 +37,15 @@ let miscFunctions = class{
      * Create a string using a Guess parameter
      */
     static convertGuess(result){
-        if (result === Guesses.HIT) {
+        let classification = result.result;
+        if (classification === Guesses.HIT) {
             return "hit";
         }
-        else if (result === Guesses.MISS) {
+        else if (classification === Guesses.MISS) {
             return "miss";
         }
-        else if (result === Guesses.SINK){
-            return "sink";
+        else if (classification === Guesses.SINK){
+            return "hit";
         }
         else {
             return "error";

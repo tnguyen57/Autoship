@@ -1,5 +1,6 @@
 const Koa = require("koa");
 const Router = require("@koa/router");
+const koaBody = require('koa-body');
 const miscFunctions = require("./server/miscFunctions");
 const Game = require("./server/Game");
 const RandomAI = require("./server/RandomAI");
@@ -34,15 +35,28 @@ router.post("/api/startBasicGame", ctx => {
     }
 });
 
+
+router.post('/api/move', koaBody(),
+  (ctx) => {
+    console.log(ctx.request.body);
+    // => POST body
+    ctx.body = JSON.stringify(ctx.request.body);
+    const x = ctx.request.body.x;
+    const y = ctx.request.body.y;
+    //Players Guess
+    let guess1 = miscFunctions.convertGuess(Game0.handleGuess(x, y));
+    console.log(guess1);
+    //Player 2/AI guess
+    let guess2 = miscFunctions.convertGuess(Game0.handleGuess(x, y));
+    ctx.response.body = {state: guess1};
+  }
+);
+
 router.post("/api/startBasicGameAI", ctx => {
     activeGames[gameID] = new Game(gameID, 10, 10); 
     
     const BoardAI = new RandomAI();
     activeGames[gameID].addShips(BoardAI.getBasicBoardShips() , false);
-
-    /**
-     * TO DO: LAUNCH AI HERE
-     */
     gameID++;
 });
 
@@ -50,7 +64,6 @@ router.post("/api/placeShips", ctx => {
     /**
      * TO DO
      */
-
 
 });
 
@@ -61,18 +74,6 @@ router.post("/api/waitShips", ctx => {
 });
 
 
-
-router.post("/api/move", ctx => {
-    //let currentGame = activeGames[ctx.request.query.id];
-    //const shipGuess = currentGame.handleGuess(ctx.request.query.x, ctx.request.query.y);
-    console.log(ctx.request);
-    const shipGuess = Game0.handleGuess(ctx.request.query.x, ctx.request.query.y);
-
-    ctx.body = {
-        state: miscFunctions.convertGuess(shipGuess.result),
-        ship: shipGuess.id
-    };
-});
 
 router.post("/api/waitMove", ctx => {
     /**
