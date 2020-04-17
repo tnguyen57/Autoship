@@ -3,4 +3,5 @@
   display: inline-block;
   max-width: 50%;
   text-align: center;
+  vertical-align: text-top;
 }

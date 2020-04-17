@@ -19,18 +19,18 @@ function RenderBoard() {
     ];
     return (
         <div>
-            <GameState
-              id="self-board"
-              kind="self"
-              size={10}
-              ships={ships}
-            />
-            <GameState
-              id="opponent-board"
-              kind="opponent"
-              size={10}
-              ships={ships}
-            />
+          <GameState
+            id="self-board"
+            kind="self"
+            size={10}
+            ships={ships}
+          />
+          <GameState
+            id="opponent-board"
+            kind="opponent"
+            size={10}
+            ships={ships}
+          />
         </div>
     );
 }

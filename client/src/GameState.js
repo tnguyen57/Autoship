@@ -207,6 +207,7 @@ export default class GameState extends React.Component {
 
   render() {
     const {
+      kind,
       size,
       id
     } = this.props;
@@ -252,6 +253,7 @@ export default class GameState extends React.Component {
         width={size * 50}
         id={id}
         ships={shipComponents}
+        shipBtn={kind === 'self' && shipData.reduce((a, ship) => a && !ship.sunk, true)}
       >
         {moves}
       </GameDisplay>

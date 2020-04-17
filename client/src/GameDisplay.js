@@ -7,9 +7,11 @@ import './GameDisplay.css';
  * Props:
  *  - width (int): the display width in pixels. Also used for the height.
  *  - ships ([record]): a list of ship types
+ *  - shipBtn (boolean): whether to display a button to submit ship
+ *    placements
  */
 export default function GameDisplay(props) {
-  const { width, ships, id } = props;
+  const { width, ships, shipBtn, id } = props;
   return (
     <div className="game-display">
       <svg width={width} height={width} id={id}>
@@ -18,6 +20,7 @@ export default function GameDisplay(props) {
       <div>
         {ships}
       </div>
+      {shipBtn && <button>Submit Ship Placement</button>}
     </div>
   );
 }
