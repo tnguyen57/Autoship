@@ -146,27 +146,29 @@ export default class GameState extends React.Component {
    * Selects the given ship and deselects any previously selected ship.
    */
   selectShip(idx) {
-    this.setState(state => {
-      const { selectedShipIndex, shipData } = state;
-      const newShipData = shipData.slice();
-      if(selectedShipIndex >= 0) {
-        newShipData[selectedShipIndex] = {
-          ...shipData[selectedShipIndex],
-          x: NaN,
-          y: NaN,
-          placement: 'none'
+    if(this.props.kind === 'self') {
+      this.setState(state => {
+        const { selectedShipIndex, shipData } = state;
+        const newShipData = shipData.slice();
+        if(selectedShipIndex >= 0) {
+          newShipData[selectedShipIndex] = {
+            ...shipData[selectedShipIndex],
+            x: NaN,
+            y: NaN,
+            placement: 'none'
+          }
         }
-      }
-      newShipData[idx] = {
-        ...shipData[idx],
-        sunk: true,
-        placement: 'tentative'
-      }
-      return {
-        shipData: newShipData,
-        selectedShipIndex: idx
-      }
-    });
+        newShipData[idx] = {
+          ...shipData[idx],
+          sunk: true,
+          placement: 'tentative'
+        }
+        return {
+          shipData: newShipData,
+          selectedShipIndex: idx
+        }
+      });
+    }
   }
 
   /**
