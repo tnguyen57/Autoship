@@ -11,6 +11,8 @@
 #ifndef __MoveGenerator_H
 #define __MoveGenerator_H
 
+int kbhit(); //Allows the use of kbhit() for Linux Systems.
+
 class MoveGenerator
 {
 public:
@@ -26,8 +28,8 @@ private:
 	void clear(); // Deallocates any memory on the heap.
 	void randomGenerator(unsigned int &x, unsigned int &y); // Generates a move randomly using the MT random generator
 	void deterministicGenerator(unsigned int &x, unsigned int &y); // Generates a move based on a PDF of all possible ship locations (calculated within a certain time tolerance)
-	void generatePossibleShipLocations(unsigned long long& **shipsOnTile_, unsigned int i, unsigned int j,
-			unsigned int **boardRepresentation_, const Board& b, unsigned int shipNumber, bool hitShip); // Recursive method for generating all possible ship locations
+	void generatePossibleHitLocations(std::vector<std::vector<unsigned long long> >& shipsOnTile_, unsigned int i, unsigned int j,
+			unsigned int **boardRepresentation_, bool hit, unsigned int numHit_); // Calculates most likely spot for a hit
 
 	Board* b; // Board Object
 	bool** visited; // Stored a map of locations visited; true means it has been attacked, false is unrevealed

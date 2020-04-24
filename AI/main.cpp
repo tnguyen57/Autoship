@@ -47,9 +47,9 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	unsigned long int iterations = 0;
-	unsigned long int numTurns[100] = {};
-	unsigned long int n = atoi(argv[6]);
+	unsigned long long iterations = 0;
+	unsigned long long numTurns[100] = {};
+	unsigned long long n = atoi(argv[6]);
 	bool debuggingOutput = false;
 
 	while (iterations < n)
@@ -74,8 +74,8 @@ int main(int argc, char** argv)
 		if (out_put == "true")
 			debuggingOutput = true;
 
-		if (debuggingOutput)
-			std::cout << b << std::endl;
+		// if (debuggingOutput)
+		// 	std::cout << b << std::endl;
 
 		unsigned int generatorType = atoi(argv[3]); // 1 is for a random generator, 2 is for a deterministic generator, and 3 is for the AI
 		unsigned int timePerCalculation = atoi(argv[4]); // Time is in seconds
@@ -85,20 +85,39 @@ int main(int argc, char** argv)
 		while (!g.solved())
 		{
 			unsigned int i, j;
+			unsigned int turns_ = b.getTurn();
 			g.findNextMove(i, j);
-			moveOutput << i << " " << j << std::endl;
+			if (b.getTurn() == turns_)
+			{
+				std::cout << "Error: Turns is stagnating." << std::endl << b << std::endl;
+				return 1;
+			}
+			if (iterations == 0)
+				moveOutput << i << " " << j << std::endl;
 		}
 		if (debuggingOutput)
-			g.Win();
+		{
+			// g.Win();
+			if (iterations % 50000 == 0)
+				std::cout << iterations << std::endl;
+		}
 
 		iterations++;
 		numTurns[b.getTurn()-1]++;
+		
+		if (kbhit()) break; // Allows the program to end if the user wants to end early.
 	}
 	if (debuggingOutput)
 	{
-		for (unsigned int i = 16; i < 100; i++)
-			std::cout << "Games that ended in " << i+1 << " turn(s): " << numTurns[i] << std::endl;
-		std::cout << "Total Simulations: " << n << std::endl;
+		unsigned long long totalTurns = 0;
+		for (unsigned int i = 0; i < 100; i++)
+		{
+			totalTurns += (i * numTurns[i]);
+			if (numTurns[i])
+				std::cout << "Games that ended in " << i+1 << " turn(s): " << numTurns[i] << std::endl;
+		}
+		std::cout << "Total Simulations: " << iterations << std::endl;
+		std::cout << "Average turns per game: " << totalTurns / (iterations+1) << std::endl;
 	}
 
 	return 0;
