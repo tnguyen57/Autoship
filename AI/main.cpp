@@ -81,6 +81,8 @@ int main(int argc, char** argv)
 		unsigned int timePerCalculation = atoi(argv[4]); // Time is in seconds
 
 		MoveGenerator g(timePerCalculation, generatorType, &b);
+		
+		setvbuf(stdout, NULL, _IONBF, 0);
 
 		while (!g.solved())
 		{

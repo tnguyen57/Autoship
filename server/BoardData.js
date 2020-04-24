@@ -9,13 +9,18 @@ const Guesses = require("./utilities");
 const BoardData = class {
     /**
     * Construct the board given an array of ships.
-    *
-    * @param {Array[ShipData]} - Contains all of the ships to the board.
+    * 
+    * @param {Array[ShipData]} shipArray- Contains all of the ships to the board.
+    * @param {Array[ShipData]} xSize- The 'width' of the board
+    * @param {Array[ShipData]} ySize- The 'length' of the board
     */
-    constructor(shipArray) {
+    constructor(shipArray, xSize = 10, ySize = 10) {
+
         this._guesses = [];
         this._sunkShip = [];
         this._remainingShips = shipArray;
+        this._width = xSize;
+        this._height = ySize;
 
         for (let i = 0; i < shipArray.length; i++) {
             const ship = shipArray[i];
@@ -70,6 +75,24 @@ const BoardData = class {
         }
         return this._sunkShip[this._sunkShip.length - 1].id;
     }
-};
+
+    /**
+    * Returns the width of the board of the last sunk simp
+    * 
+    * @return {Int} - Returns the width of the board. Stored in xSize
+    */
+    get width() {
+        return this._width;
+    }
+
+    /**
+    * Returns the height of the board of the last sunk simp
+    * 
+    * @return {Int} - Returns the length of the board. Stored in ySize
+    */
+    get height() {
+        return this._height;
+    }
+}
 
 module.exports = BoardData;

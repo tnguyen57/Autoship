@@ -38,10 +38,6 @@ export default class Square extends React.Component {
       boxSize,
       hit
     } = this.props;
-    const colors = {
-      hit: 'red',
-      miss: 'black'
-    };
     return (
       <g onClick={this.handleClick}>
         <rect
