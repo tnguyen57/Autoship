@@ -184,11 +184,7 @@ void MoveGenerator::generatePossibleHitLocations(std::vector<std::vector<unsigne
 					j = 0;
 					i++;
 				}
-				else
-				{
-					std::cout << "SOMETHING'S WRONG HERE!!!!" << std::endl;
-					return; // Prevents the loop from testing indices out of bounds. The code should never reach here.
-				}
+				else return; // Prevents the loop from testing indices out of bounds. The code should never reach here.
 			}
 			for (unsigned int ship = 0; ship < b->getNumShips(); ship++)
 			{
