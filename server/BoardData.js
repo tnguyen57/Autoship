@@ -9,13 +9,12 @@ const Guesses = require("./utilities");
 const BoardData = class {
     /**
     * Construct the board given an array of ships.
-    * 
-    * @param {Array[ShipData]} shipArray- Contains all of the ships to the board.
-    * @param {Array[ShipData]} xSize- The 'width' of the board
-    * @param {Array[ShipData]} ySize- The 'length' of the board
+    *
+    * @param {Array.<ShipData>} shipArray - Contains all of the ships
+    * @param {Array.<ShipData>} [xSize = 10] - The 'width' of the board
+    * @param {Array.<ShipData>} [ySize = 10] - The 'length' of the board
     */
     constructor(shipArray, xSize = 10, ySize = 10) {
-
         this._guesses = [];
         this._sunkShip = [];
         this._remainingShips = shipArray;
@@ -36,7 +35,9 @@ const BoardData = class {
      * @param {Int} x - x coordinate of the guess
      * @param {Int} y - y coordinate of the guess
      * @modify - Make the ship as sunken/hit if the guess succeed
-     * @return {id: Int, result:Guesses} - Returns whether the guess is a hit/miss/sink and the id of the ship if hit/sink
+     * @return {{id: Int, result:Guesses}} - Returns whether the guess is
+     *                                       a hit/miss/sink and the id of
+     *                                       the ship if hit/sink
      */
     guess(x, y) {
         this._guesses.push({x: x, y: y});
@@ -67,7 +68,8 @@ const BoardData = class {
     /**
     * Returns the ID of the last sunk simp
     *
-    * @return {Int} - Returns the id of the last sunk ship. Return null if no ship sunk.
+    * @return {Int} - Returns the id of the last sunk ship.
+    *                 Return null if no ship sunk.
     */
     get lastSunkID() {
         if (this._sunkShip.length === 0) {
@@ -78,7 +80,7 @@ const BoardData = class {
 
     /**
     * Returns the width of the board of the last sunk simp
-    * 
+    *
     * @return {Int} - Returns the width of the board. Stored in xSize
     */
     get width() {
@@ -87,12 +89,12 @@ const BoardData = class {
 
     /**
     * Returns the height of the board of the last sunk simp
-    * 
+    *
     * @return {Int} - Returns the length of the board. Stored in ySize
     */
     get height() {
         return this._height;
     }
-}
+};
 
 module.exports = BoardData;
