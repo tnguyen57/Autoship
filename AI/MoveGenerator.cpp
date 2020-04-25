@@ -191,8 +191,8 @@ void MoveGenerator::randomGenerator(unsigned int &x, unsigned int &y)
 }
 
 /*
-	The deterministic generator was tested with ___ simulations. The average turns per game
-	was __. It completed ______ games per second and ran for __h:__m:__.___s.
+	The deterministic generator was tested with 100,000,000 simulations. The average turns per game
+	was 53. It completed 4270 games per second and ran for 6h:30m:19.436s.
 */
 void MoveGenerator::deterministicGenerator(unsigned int &x, unsigned int &y)
 {

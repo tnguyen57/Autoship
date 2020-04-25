@@ -61,13 +61,6 @@ int main(int argc, char** argv)
 			return -1;
 		}
 
-		std::ofstream moveOutput(argv[2]);
-		if (!moveOutput)
-		{
-			std::cerr << "Couldn't open " << argv[2] << " for writing." << std::endl;
-			return -1;
-		}
-
 		Board b = loadBoard(boardInput);
 		boardInput.close();
 
@@ -84,25 +77,47 @@ int main(int argc, char** argv)
 		MoveGenerator g(timePerCalculation, generatorType, &b);
 		
 		// setvbuf(stdout, NULL, _IONBF, 0);
-
-		while (!g.solved())
+		if (iterations + 1 == n)
 		{
-			unsigned int i, j;
-			unsigned int turns_ = b.getTurn();
-			g.findNextMove(i, j);
-			if (b.getTurn() == turns_)
+			std::ofstream moveOutput(argv[2]);
+			if (!moveOutput)
 			{
-				std::cerr << "Error: Turns is stagnating." << std::endl << b << std::endl;
-				return 1;
+				std::cerr << "Couldn't open " << argv[2] << " for writing." << std::endl;
+				return -1;
 			}
-			if (iterations + 1 == n)
-				moveOutput << i << " " << j << std::endl;
+			while (!g.solved())
+			{
+				unsigned int i, j;
+				unsigned int turns_ = b.getTurn();
+				g.findNextMove(i, j);
+				if (b.getTurn() == turns_)
+				{
+					std::cerr << "Error: Turns is stagnating." << std::endl << b << std::endl;
+					return 1;
+				}
+				if (iterations + 1 == n)
+					moveOutput << i << " " << j << std::endl;
+			}
+			moveOutput.close();
 		}
-		moveOutput.close();
+		else
+		{
+			while (!g.solved())
+			{
+				unsigned int i, j;
+				unsigned int turns_ = b.getTurn();
+				g.findNextMove(i, j);
+				if (b.getTurn() == turns_)
+				{
+					std::cerr << "Error: Turns is stagnating." << std::endl << b << std::endl;
+					return 1;
+				}
+			}
+		}
 		g.Win();
 		if (debuggingOutput)
 		{
-			if (iterations % 50000 == 0)
+			if (iterations % 500000 == 0)
 			{
 				std::cout << iterations << std::endl;
 				std::cout << b << std::endl;
