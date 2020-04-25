@@ -8,6 +8,7 @@
 #include <termios.h>
 #include <stropts.h>
 #include <stdbool.h>
+#include "MoveGenerator.h"
 
 int kbhit() {
     static const int STDIN = 0;

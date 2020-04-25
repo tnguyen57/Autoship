@@ -69,6 +69,7 @@ int main(int argc, char** argv)
 		}
 
 		Board b = loadBoard(boardInput);
+		boardInput.close();
 
 		std::string out_put = argv[5];
 		if (out_put == "true")
@@ -82,7 +83,7 @@ int main(int argc, char** argv)
 
 		MoveGenerator g(timePerCalculation, generatorType, &b);
 		
-		setvbuf(stdout, NULL, _IONBF, 0);
+		// setvbuf(stdout, NULL, _IONBF, 0);
 
 		while (!g.solved())
 		{
@@ -91,17 +92,21 @@ int main(int argc, char** argv)
 			g.findNextMove(i, j);
 			if (b.getTurn() == turns_)
 			{
-				std::cout << "Error: Turns is stagnating." << std::endl << b << std::endl;
+				std::cerr << "Error: Turns is stagnating." << std::endl << b << std::endl;
 				return 1;
 			}
-			if (iterations == 0)
+			if (iterations + 1 == n)
 				moveOutput << i << " " << j << std::endl;
 		}
+		moveOutput.close();
+		g.Win();
 		if (debuggingOutput)
 		{
-			// g.Win();
 			if (iterations % 50000 == 0)
+			{
 				std::cout << iterations << std::endl;
+				std::cout << b << std::endl;
+			}
 		}
 
 		iterations++;
@@ -114,12 +119,12 @@ int main(int argc, char** argv)
 		unsigned long long totalTurns = 0;
 		for (unsigned int i = 0; i < 100; i++)
 		{
-			totalTurns += (i * numTurns[i]);
+			totalTurns += ((i+1) * numTurns[i]);
 			if (numTurns[i])
 				std::cout << "Games that ended in " << i+1 << " turn(s): " << numTurns[i] << std::endl;
 		}
 		std::cout << "Total Simulations: " << iterations << std::endl;
-		std::cout << "Average turns per game: " << totalTurns / (iterations+1) << std::endl;
+		std::cout << "Average turns per game: " << totalTurns / iterations << std::endl;
 	}
 
 	return 0;
