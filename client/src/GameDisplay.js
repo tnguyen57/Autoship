@@ -9,9 +9,10 @@ import './GameDisplay.css';
  *  - ships ([record]): a list of ship types
  *  - shipBtn (boolean): whether to display a button to submit ship
  *    placements
+ *  - onSubmitShips (function()): callback for the ship button.
  */
 export default function GameDisplay(props) {
-  const { width, ships, shipBtn, id } = props;
+  const { width, ships, shipBtn, onSubmitShips, id } = props;
   return (
     <div className="game-display">
       <svg width={width} height={width} id={id}>
@@ -20,7 +21,7 @@ export default function GameDisplay(props) {
       <div>
         {ships}
       </div>
-      {shipBtn && <button>Submit Ship Placement</button>}
+      {shipBtn && <button onClick={onSubmitShips}>Submit Ship Placement</button>}
     </div>
   );
 }

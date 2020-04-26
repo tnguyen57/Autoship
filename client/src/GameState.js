@@ -29,9 +29,11 @@ export default class GameState extends React.Component {
         placement: 'none',
         sunk: props.kind === 'self'
       })),
-      selectedShipIndex: -1
+      selectedShipIndex: -1,
+      frozen: false
     };
     this.submitMove = this.submitMove.bind(this);
+    this.submitShips = this.submitShips.bind(this);
     this.selectShip = this.selectShip.bind(this);
     this.moveSelectedShipToSquare = this.moveSelectedShipToSquare.bind(this);
     this.rotateSelectedShip = this.rotateSelectedShip.bind(this);
@@ -57,7 +59,7 @@ export default class GameState extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({ x, y })
     });
     if(res.ok) {
       const json = await res.json();
@@ -66,6 +68,32 @@ export default class GameState extends React.Component {
           [`${x},${y}`]: json.state,
           ...this.state.squares
         }
+      });
+    } else {
+      console.log(`Server returned code ${res.status}. Dev please implement error handling.`);
+    }
+  }
+
+  /**
+   * Submits the current ship placements to the server.
+   */
+  async submitShips() {
+    const res = await fetch('/api/placeShips', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state.shipData.map(ship => ({
+        name: ship.name,
+        length: ship.length,
+        x: ship.x,
+        y: ship.y,
+        rotation: ship.rotation
+      })))
+    });
+    if(res.ok) {
+      this.setState({
+        frozen: true
       });
     } else {
       console.log(`Server returned code ${res.status}. Dev please implement error handling.`);
@@ -171,6 +199,10 @@ export default class GameState extends React.Component {
   selectShip(idx) {
     if(this.props.kind === 'self') {
       this.setState(state => {
+        // do not allow edits of frozen boards
+        if(state.frozen) {
+          return {};
+        }
         const { selectedShipIndex, shipData } = state;
         const newShipData = shipData.slice();
         if(selectedShipIndex >= 0) {
@@ -247,7 +279,8 @@ export default class GameState extends React.Component {
     const {
       selectedShipIndex,
       shipData,
-      squares
+      squares,
+      frozen
     } = this.state;
     // highlight squares where ships are
     const shipHighlight = this.getSquaresWithShips();
@@ -286,7 +319,8 @@ export default class GameState extends React.Component {
         width={size * 50}
         id={id}
         ships={shipComponents}
-        shipBtn={kind === 'self' && shipData.reduce((a, ship) => a && !ship.sunk, true)}
+        shipBtn={kind === 'self' && !frozen && shipData.reduce((a, ship) => a && !ship.sunk, true)}
+        onSubmitShips={this.submitShips}
       >
         {moves}
       </GameDisplay>
