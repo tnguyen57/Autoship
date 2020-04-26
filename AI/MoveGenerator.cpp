@@ -163,8 +163,8 @@ void MoveGenerator::findNextMove(unsigned int &i, unsigned int &j)
 }
 
 /*
-	The random generator was tested with 15,800,561 simulations. The average turns per game
-	was 93. It completed 331.5 games per second and ran for 13h:14m:21.897s.
+	The random generator was tested with 100,000,000 simulations. The average turns per game
+	was 94. It completed 10,571 games per second and ran for 2h:37m:39.919s.
 */
 void MoveGenerator::randomGenerator(unsigned int &x, unsigned int &y)
 {
