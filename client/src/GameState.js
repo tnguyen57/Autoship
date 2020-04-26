@@ -80,7 +80,30 @@ export default class GameState extends React.Component {
     this.setState(state => {
       const { selectedShipIndex, shipData } = state;
       if(selectedShipIndex >= 0) {
+        // determine if there is overlap with other ships.
+        // if there is, short-circuit.
         const ship = shipData[selectedShipIndex];
+        const squaresWithShips = this.getSquaresWithShips();
+        const { x, y, length } = ship;
+        switch(ship.rotation) {
+          case 'vertical':
+            for(let i = 0; i < length; i++) {
+              if(squaresWithShips[`${x},${y + i}`] === 'present') {
+                return {};
+              }
+            }
+            break;
+          case 'horizontal':
+            for(let i = 0; i < length; i++) {
+              if(squaresWithShips[`${x + i},${y}`] === 'present') {
+                return {};
+              }
+            }
+            break;
+          default:
+            break;
+        }
+        // there is no overlap with other ships
         const newShipData = shipData.slice();
         newShipData[selectedShipIndex] = {
           ...ship,
@@ -182,13 +205,18 @@ export default class GameState extends React.Component {
       const { length, rotation, placement } = ship;
       let { x, y } = ship;
       if(placement !== 'none') {
+        // set squares with ships on them. Present ships take
+        // priority over tentative ships.
         switch(rotation) {
           case 'vertical':
               if(y + length > size) {
                 y = size - length;
               }
               for(let i = 0; i < length; i++) {
-                res[`${x},${y + i}`] = placement;
+                const key = `${x},${y + i}`;
+                if(res[key] !== 'present') {
+                  res[key] = placement;
+                }
               }
             break;
           case 'horizontal':
@@ -196,7 +224,10 @@ export default class GameState extends React.Component {
                 x = size - length;
               }
               for(let i = 0; i < length; i++) {
-                res[`${x + i},${y}`] = placement;
+                const key = `${x + i},${y}`;
+                if(res[key] !== 'present') {
+                  res[key] = placement;
+                }
               }
             break;
           default:
