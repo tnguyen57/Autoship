@@ -6,3 +6,11 @@
 .square--hit {
   fill: red;
 }
+
+.square-tile--tentative {
+  fill: darkgray;
+}
+
+.square-tile--present {
+  fill: gray;
+}

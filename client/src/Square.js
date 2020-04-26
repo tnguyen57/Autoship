@@ -9,14 +9,17 @@ import './Square.css';
  *  - y (int): the y coordinate, in squares
  *  - boxSize (int): the size, in pixels, that this square takes up
  *  - hit (string): the hit state, one of 'none', 'hit', 'miss'
- *  - onClick (function(int, int)): click handler for when the player
- *    clicks (makes a move)
+ *  - ship (string): the ship state, one of 'none', 'present', 'tentative'
+ *  - onClick (function(int, int)): click handler
+ *  - onHover (function(int, int)): hover handler
  */
 export default class Square extends React.Component {
 
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.handleHover = this.handleHover.bind(this);
+    this.handleRightClick = this.handleRightClick.bind(this);
   }
 
   handleClick(e) {
@@ -31,22 +34,51 @@ export default class Square extends React.Component {
     }
   }
 
+  handleRightClick(e) {
+    const {
+      x,
+      y,
+      onRightClick
+    } = this.props;
+    e.preventDefault();
+    if(onRightClick) {
+      onRightClick(x, y);
+    }
+  }
+
+  handleHover(e) {
+    const {
+      x,
+      y,
+      onHover
+    } = this.props;
+    if(onHover) {
+      onHover(x, y);
+    }
+  }
+
   render() {
     const {
       x,
       y,
       boxSize,
-      hit
+      hit,
+      ship
     } = this.props;
     return (
-      <g onClick={this.handleClick}>
+      <g
+        onClick={this.handleClick}
+        onMouseOver={this.handleHover}
+      >
         <rect
           x={x * boxSize}
           y={y * boxSize}
           width={boxSize}
           height={boxSize}
+          className={`square-tile square-tile--${ship}`}
           stroke="black"
           fill="transparent"
+          onContextMenu={this.handleRightClick}
         />
         {hit !== 'none' && (
           <circle
