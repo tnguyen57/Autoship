@@ -10,7 +10,7 @@ const ShipData = class {
     /**
      * Create a ship using an array of coordinates.
      *
-     * @param {Array[{{x:Int, y:Int}}]} coordinateArray
+     * @param {Array.<{x:Int, y:Int}>} coordinateArray
      * @param {Int} id
      */
     constructor(coordinateArray, id = 0) {
@@ -30,7 +30,8 @@ const ShipData = class {
     guess(x, y) {
         for (let i = 0; i < this._activePositions.length; i++) {
             const currentPosition = this._activePositions[i];
-            if (this._activePositions[i].x === x && this._activePositions[i].y === y) {
+            if (this._activePositions[i].x === x &&
+              this._activePositions[i].y === y) {
                 this._hitPositions.push(currentPosition);
                 this._activePositions.splice(i, 1);
                 if (this.isSunk()) {
@@ -51,6 +52,12 @@ const ShipData = class {
         return this._activePositions.length === 0;
     }
 
+
+    /**
+    * Returns the ID of the ship
+    *
+    * @return {Int} - Returns the ID
+    */
     get id() {
         return this._id;
     }
