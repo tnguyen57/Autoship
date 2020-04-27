@@ -39,7 +39,8 @@
   "dependencies": {
     "@koa/router": "^8.0.8",
     "koa": "^2.11.0",
-    "koa-body": "^4.1.1"
+    "koa-body": "^4.1.1",
+    "koa-bodyparser": "^4.3.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
