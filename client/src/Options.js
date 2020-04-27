@@ -79,6 +79,7 @@ function Options() {
                             variant="outlined"
                             color="primary"
                             className={classes.button}
+                            disabled={true}
                     >
                         Play
                     </Button>
