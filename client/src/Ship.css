@@ -1,0 +1,23 @@
+
+.ship {
+  display: inline-block;
+  text-align: center;
+  margin: 1em;
+}
+
+.ship-icon {
+  margin-bottom: 0.5em;
+  border-radius: 50%;
+}
+
+.ship-icon__unsunk {
+  background-color: black;
+}
+
+.ship-icon__sunk {
+  background-color: gray;
+}
+
+.ship-underline__selected {
+  background-color: black;
+}

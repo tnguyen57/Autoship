@@ -24,9 +24,9 @@
   },
   "homepage": "https://github.com/tnguyen57/Autoship#readme",
   "husky": {
-     "hooks": {
-       "pre-commit": "lint-staged"
-     }
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "index.js": [
@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "@koa/router": "^8.0.8",
-    "koa": "^2.11.0"
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
