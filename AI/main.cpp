@@ -97,6 +97,7 @@ int main(int argc, char** argv)
 				}
 				if (iterations + 1 == n)
 					moveOutput << i << " " << j << std::endl;
+					std::cout << i << " " << j << std::endl;
 			}
 			moveOutput.close();
 		}
