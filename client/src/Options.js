@@ -66,10 +66,10 @@ function Options() {
                         </RadioGroup>
                         <FormLabel component="legend">Select Size</FormLabel>
                         <RadioGroup row aria-label="board_size" name="board_size" value={value2} onChange={handleRadioChange2}>
-                            <FormControlLabel value="9x9" control={<Radio />} label="9x9" name="board_size"/>
+                            <FormControlLabel value="9x9" control={<Radio />} label="9x9" name="board_size" disabled={true}/>
                             <FormControlLabel value="10x10" control={<Radio />} label="10x10" name="board_size"/>
-                            <FormControlLabel value="11x11" control={<Radio />} label="11x11" name="board_size"/>
-                            <FormControlLabel value="12x12" control={<Radio />} label="12x12" name="board_size"/>
+                            <FormControlLabel value="11x11" control={<Radio />} label="11x11" name="board_size" disabled={true}/>
+                            <FormControlLabel value="12x12" control={<Radio />} label="12x12" name="board_size" disabled={true}/>
                         </RadioGroup>
                         <FormHelperText>{helperText}</FormHelperText>
                     </FormControl>
