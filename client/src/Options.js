@@ -62,14 +62,14 @@ function Options() {
                             <FormControlLabel value="easy" control={<Radio />} label="Easy AI" name="difficulty"/>
                             <FormControlLabel value="medium" control={<Radio />} label="Medium AI" name="difficulty"/>
                             <FormControlLabel value="hard" control={<Radio />} label="Hard AI" name="difficulty"/>
-                            <FormControlLabel value="human" control={<Radio />} label="Human" name="difficulty" disabled={true}/>
+                            <FormControlLabel value="human" control={<Radio />} label="Human" name="difficulty"/>
                         </RadioGroup>
                         <FormLabel component="legend">Select Size</FormLabel>
                         <RadioGroup row aria-label="board_size" name="board_size" value={value2} onChange={handleRadioChange2}>
-                            <FormControlLabel value="9x9" control={<Radio />} label="9x9" name="board_size" disabled={true}/>
+                            <FormControlLabel value="9x9" control={<Radio />} label="9x9" name="board_size"/>
                             <FormControlLabel value="10x10" control={<Radio />} label="10x10" name="board_size"/>
-                            <FormControlLabel value="11x11" control={<Radio />} label="11x11" name="board_size" disabled={true}/>
-                            <FormControlLabel value="12x12" control={<Radio />} label="12x12" name="board_size" disabled={true}/>
+                            <FormControlLabel value="11x11" control={<Radio />} label="11x11" name="board_size"/>
+                            <FormControlLabel value="12x12" control={<Radio />} label="12x12" name="board_size"/>
                         </RadioGroup>
                         <FormHelperText>{helperText}</FormHelperText>
                     </FormControl>
