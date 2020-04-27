@@ -105,6 +105,7 @@ export default class GameState extends React.Component {
    * in its current location.
    */
   confirmSelectedShipPlacement() {
+    const { size } = this.props;
     this.setState(state => {
       const { selectedShipIndex, shipData } = state;
       if(selectedShipIndex >= 0) {
@@ -112,9 +113,14 @@ export default class GameState extends React.Component {
         // if there is, short-circuit.
         const ship = shipData[selectedShipIndex];
         const squaresWithShips = this.getSquaresWithShips();
-        const { x, y, length } = ship;
+        const { length } = ship;
+        // adjust these so that they point to the upper-left corner
+        let { x, y } = ship;
         switch(ship.rotation) {
           case 'vertical':
+            if(y + length > size) {
+              y = size - length;
+            }
             for(let i = 0; i < length; i++) {
               if(squaresWithShips[`${x},${y + i}`] === 'present') {
                 return {};
@@ -122,6 +128,9 @@ export default class GameState extends React.Component {
             }
             break;
           case 'horizontal':
+            if(x + length > size) {
+              x = size - length;
+            }
             for(let i = 0; i < length; i++) {
               if(squaresWithShips[`${x + i},${y}`] === 'present') {
                 return {};
@@ -135,6 +144,7 @@ export default class GameState extends React.Component {
         const newShipData = shipData.slice();
         newShipData[selectedShipIndex] = {
           ...ship,
+          x, y,
           sunk: false,
           placement: 'present'
         };

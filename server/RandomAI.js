@@ -119,7 +119,6 @@ const RandomAI = class {
                 return null;
             }
             shipArray.push(ship);
-            id--;
             if (i === 3 && firstTime) {
                 i--;
                 firstTime = false;
