@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "Board.h"
 
 Ship::Ship(unsigned int _size, std::string _name)

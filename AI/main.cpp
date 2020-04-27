@@ -47,9 +47,9 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	unsigned long int iterations = 0;
-	unsigned long int numTurns[100] = {};
-	unsigned long int n = atoi(argv[6]);
+	unsigned long long iterations = 0;
+	unsigned long long numTurns[100] = {};
+	unsigned long long n = atoi(argv[6]);
 	bool debuggingOutput = false;
 
 	while (iterations < n)
@@ -61,48 +61,86 @@ int main(int argc, char** argv)
 			return -1;
 		}
 
-		std::ofstream moveOutput(argv[2]);
-		if (!moveOutput)
-		{
-			std::cerr << "Couldn't open " << argv[2] << " for writing." << std::endl;
-			return -1;
-		}
-
 		Board b = loadBoard(boardInput);
+		boardInput.close();
 
 		std::string out_put = argv[5];
 		if (out_put == "true")
 			debuggingOutput = true;
 
-		if (debuggingOutput)
-			std::cout << b << std::endl;
+		// if (debuggingOutput)
+		// 	std::cout << b << std::endl;
 
 		unsigned int generatorType = atoi(argv[3]); // 1 is for a random generator, 2 is for a deterministic generator, and 3 is for the AI
 		unsigned int timePerCalculation = atoi(argv[4]); // Time is in seconds
 
 		MoveGenerator g(timePerCalculation, generatorType, &b);
 		
-		setvbuf(stdout, NULL, _IONBF, 0);
-
-		while (!g.solved())
+		// setvbuf(stdout, NULL, _IONBF, 0);
+		if (iterations + 1 == n)
 		{
-			unsigned int i, j;
-			g.findNextMove(i, j);
-			moveOutput << i << " " << j << std::endl;
-			
-			std::cout << i << " " << j << std::endl;
+			std::ofstream moveOutput(argv[2]);
+			if (!moveOutput)
+			{
+				std::cerr << "Couldn't open " << argv[2] << " for writing." << std::endl;
+				return -1;
+			}
+			while (!g.solved())
+			{
+				unsigned int i, j;
+				unsigned int turns_ = b.getTurn();
+				g.findNextMove(i, j);
+				if (b.getTurn() == turns_)
+				{
+					std::cerr << "Error: Turns is stagnating." << std::endl << b << std::endl;
+					return 1;
+				}
+				if (iterations + 1 == n)
+					moveOutput << i << " " << j << std::endl;
+					std::cout << i << " " << j << std::endl;
+			}
+			moveOutput.close();
 		}
+		else
+		{
+			while (!g.solved())
+			{
+				unsigned int i, j;
+				unsigned int turns_ = b.getTurn();
+				g.findNextMove(i, j);
+				if (b.getTurn() == turns_)
+				{
+					std::cerr << "Error: Turns is stagnating." << std::endl << b << std::endl;
+					return 1;
+				}
+			}
+		}
+		g.Win();
 		if (debuggingOutput)
-			g.Win();
+		{
+			if (iterations % 500000 == 0)
+			{
+				std::cout << iterations << std::endl;
+				std::cout << b << std::endl;
+			}
+		}
 
 		iterations++;
 		numTurns[b.getTurn()-1]++;
+		
+		if (kbhit()) break; // Allows the program to end if the user wants to end early.
 	}
 	if (debuggingOutput)
 	{
-		for (unsigned int i = 16; i < 100; i++)
-			std::cout << "Games that ended in " << i+1 << " turn(s): " << numTurns[i] << std::endl;
-		std::cout << "Total Simulations: " << n << std::endl;
+		unsigned long long totalTurns = 0;
+		for (unsigned int i = 0; i < 100; i++)
+		{
+			totalTurns += ((i+1) * numTurns[i]);
+			if (numTurns[i])
+				std::cout << "Games that ended in " << i+1 << " turn(s): " << numTurns[i] << std::endl;
+		}
+		std::cout << "Total Simulations: " << iterations << std::endl;
+		std::cout << "Average turns per game: " << totalTurns / iterations << std::endl;
 	}
 
 	return 0;
