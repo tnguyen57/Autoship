@@ -20,23 +20,16 @@ ShipFactory = class {
      * @param {Int} y
      * @param {boolean} isVertical
      * @param {Int} id
+     * @param {Int} size
      * @return {ShipData}
      */
-    static newBasicShip(x, y, isVertical, id) {
-        let size = 0;
-        if (id === 1) {
-            size = 5;
-        } else if (id === 2) {
-            size = 4;
-        } else if (id === 3) {
-            size = 3;
-        } else if (id === 4) {
-            size = 2;
-        }
+    static newBasicShip(x, y, isVertical, id, size) {
         let orientation = 0;
         if (isVertical) {
             orientation = 1;
         }
+        let v = miscFunctions.generateShip(size, {x: x, y: y}, orientation);
+        console.log(v);
         return new ShipData(
             miscFunctions.generateShip(size, {x: x, y: y}, orientation), id);
     }

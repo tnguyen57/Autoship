@@ -1,9 +1,11 @@
 const Koa = require("koa");
 const Router = require("@koa/router");
-const koaBody = require('koa-body');
+const koaBody = require("koa-body");
 const miscFunctions = require("./server/miscFunctions");
 const Game = require("./server/Game");
 const RandomAI = require("./server/RandomAI");
+const ShipFactory = require("./server/ShipFactory");
+const AIRunner = require("./server/AIRunner");
 
 const app = new Koa();
 const router = new Router();
@@ -60,11 +62,31 @@ router.post("/api/startBasicGameAI", ctx => {
     gameID++;
 });
 
-router.post("/api/placeShips", ctx => {
-    /**
-     * TO DO
-     */
+router.post("/api/placeShips", koaBody(), 
+(ctx) => {
+    
+    let shipArray = [];
+    console.log(ctx.request.body);
+    let i = 0;
+    while (i < 5){
+        let data = ctx.request.body[i];
+        let orientation = 0;
+        if (data.rotation === "vertical"){
+            orientation = 1;
+        }
+        let size = parseInt(data.length);
+        let x = parseInt(data.x);
+        let y = parseInt(data.y);
 
+        shipArray.push(miscFunctions.generateShip(size, {x: x, y: y}, orientation));
+        i++;
+    }
+    miscFunctions.writeShipArrayToFile(0, shipArray, 10, 10);
+ 
+
+    const AI = new AIRunner(0, 2);
+    AI.startAI();
+    
 });
 
 router.post("/api/waitShips", ctx => {

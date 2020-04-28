@@ -14,7 +14,7 @@ const miscFunctions = class {
     static generateShip(size, start, orientation) {
         const ship = [];
         for (let i = 0; i < size; i++) {
-            if (orientation === 1) {
+            if (orientation === 1) {  
                 ship.push({x: start.x, y: start.y + i});
             } else {
                 ship.push({x: start.x + i, y: start.y});
