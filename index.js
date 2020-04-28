@@ -87,10 +87,6 @@ router.post("/api/placeShips", koaBody(),
     const AI = new AIRunner(0, 2);
     AI.startAI();
     
-    
-    
-    
-
 });
 
 router.post("/api/waitShips", ctx => {
